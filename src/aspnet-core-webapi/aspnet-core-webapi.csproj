@@ -2,6 +2,13 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>de.playground.aspnet.core.webapi</AssemblyName>
+    <RootNamespace>de.playground.aspnet.core.webapi</RootNamespace>
+    <Authors>Stefan Hackauf</Authors>
+    <Company />
+    <Description />
+    <RepositoryUrl>https://github.com/SHackauf/aspnet-core-playground</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/SHackauf/aspnet-core-playground</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>

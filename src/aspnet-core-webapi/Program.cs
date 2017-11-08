@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace aspnet_core_webapi
+namespace de.playground.aspnet.core.webapi
 {
     public class Program
     {
