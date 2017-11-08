@@ -3,3 +3,7 @@
 ################################################################################
 
 .vs/
+
+# Project
+src/aspnet-core-webapi/bin/
+src/aspnet-core-webapi/obj/
