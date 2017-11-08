@@ -39,12 +39,14 @@ namespace de.playground.aspnet.core.webapi.Controllers
         {
             if (this.storage.ContainsKey(id))
             {
-
                 return this.Ok(this.storage[id]);
             }
 
             return this.NotFound();
         }
+
+        [HttpHead("{id}")]
+        public IActionResult Head(int id) => this.storage.ContainsKey(id) ? this.Ok() : (IActionResult)this.NotFound();
 
         [HttpPost]
         public IActionResult Post(string customer) // [FromBody]string value
