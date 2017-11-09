@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Authors>Stefan Hackauf</Authors>
+    <Company>Stefan Hackauf</Company>
+    <PackageProjectUrl>https://github.com/SHackauf/aspnet-core-playground</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SHackauf/aspnet-core-playground</RepositoryUrl>
+    <Product>aspnet-core-playground</Product>
+  </PropertyGroup>
+
+</Project>

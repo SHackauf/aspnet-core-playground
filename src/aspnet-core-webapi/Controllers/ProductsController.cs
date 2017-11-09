@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using de.playground.aspnet.core.contracts.modules;
+using de.playground.aspnet.core.dtos;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,97 +15,67 @@ namespace de.playground.aspnet.core.webapi.Controllers
     {
         #region Private Fields
 
-        private readonly Dictionary<int, Dictionary<int, string>> storage;
-        private int nextFreeId = 1;
+        private readonly IProductModule productModule;
 
         #endregion
 
         #region Constructor
 
-        public ProductsController() => this.storage = new Dictionary<int, Dictionary<int, string>>
-            {
-                { 1, new Dictionary<int, string> { { nextFreeId++, "Product 1" }, { nextFreeId++, "Product 2" }, { nextFreeId++, "Product 3" } } },
-                { 2, new Dictionary<int, string> { { nextFreeId++, "Product 1" }, { nextFreeId++, "Product 2" } } },
-                { 3, new Dictionary<int, string> { { nextFreeId++, "Product 1" } } },
-            };
+        public ProductsController(IProductModule productModule) => this.productModule = productModule;
 
         #endregion
 
         #region Public Methods
 
         [HttpGet]
-        public IActionResult Get(int customerId)
+        public async Task<IActionResult> GetAsync(int customerId) => this.Ok(await this.productModule.GetProductsAsync(customerId));
+
+        [HttpGet("{id}", Name = nameof(GetAsync))]
+        public async Task<IActionResult> GetAsync(int customerId, int id)
         {
-            // TODO: check if customer exists.
-            if (this.storage.ContainsKey(customerId))
-            {
-                return this.Ok(this.storage[customerId].Values);
-            }
-
-            return this.Ok(Enumerable.Empty<string>());
-        }
-
-        [HttpGet("{id}")]
-        public IActionResult Get(int customerId, int id)
-        {
-            if (this.storage.ContainsKey(customerId) && this.storage[customerId].ContainsKey(id))
-            {
-                return this.Ok(this.storage[customerId][id]);
-            }
-
-            return this.NotFound();
+            var productDto = await this.productModule.GetProductAsync(customerId, id);
+            return productDto == null ? (IActionResult)this.NotFound() : this.Ok(productDto);
         }
 
         [HttpHead("{id}")]
-        public IActionResult Head(int customerId, int id) => this.storage.ContainsKey(customerId) && this.storage[customerId].ContainsKey(id) ? this.Ok() : (IActionResult)this.NotFound();
+        public async Task<IActionResult> HeadAsync(int customerId, int id) => await this.productModule.HasProductAsync(customerId, id) ? this.Ok() : (IActionResult)this.NotFound();
 
         [HttpPost]
-        public IActionResult Post(int customerId, [FromBody]string product) // [FromBody]string product
+        public async Task<IActionResult> PostAsync(int customerId, [FromBody]ProductDto product)
         {
-            // TODO: check if customer exists.
-            if (string.IsNullOrEmpty(product))
+            if (product == null || product.Id > 0 || product.CustomerId != customerId)
             {
                 return this.BadRequest();
             }
 
-            if (!this.storage.ContainsKey(customerId))
-            {
-                this.storage.Add(customerId, new Dictionary<int, string>());
-            }
-
-            var productId = nextFreeId++;
-            this.storage[customerId].Add(productId, product);
-
-            return this.CreatedAtRoute(nameof(this.Get), new { customerId = customerId, id = productId }, product);
+            var productDto = await this.productModule.AddProductAsync(product);
+            return productDto == null
+                ? (IActionResult)this.BadRequest()
+                : this.CreatedAtRoute(nameof(this.GetAsync), new { id = productDto.Id }, productDto);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int customerId, int id, string product) // [FromBody]string value
+        public async Task<IActionResult> PutAsync(int customerId, int id, [FromBody]ProductDto product)
         {
-            if (string.IsNullOrEmpty(product))
+            if (product == null || product.Id <= 0 || id != product.Id || customerId != product.CustomerId)
             {
                 return this.BadRequest();
             }
 
-            if (!this.storage.ContainsKey(customerId) || !this.storage[customerId].ContainsKey(id))
-            {
-                return NotFound();
-            }
-
-            this.storage[customerId][id] = product;
-            return this.Ok(product);
+            var productDto = await this.productModule.ModifyProductAsync(product);
+            return productDto == null ? (IActionResult)this.NotFound() : this.Ok(productDto);
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int customerId, int id)
+        public async Task<IActionResult> DeleteAsync(int customerId, int id)
         {
-            if (!this.storage.ContainsKey(customerId) || !this.storage[customerId].ContainsKey(id))
+            var productDto = await this.productModule.GetProductAsync(customerId, id);
+            if (productDto == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            this.storage[customerId].Remove(id);
-            return this.NoContent();
+            return await this.productModule.DeleteProductAsync(productDto) ? (IActionResult)this.NoContent() : this.NotFound();
         }
 
         #endregion

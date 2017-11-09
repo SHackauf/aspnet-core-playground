@@ -9,6 +9,7 @@
     <Description />
     <RepositoryUrl>https://github.com/SHackauf/aspnet-core-playground</RepositoryUrl>
     <PackageProjectUrl>https://github.com/SHackauf/aspnet-core-playground</PackageProjectUrl>
+    <Product>aspnet-core-playground</Product>
   </PropertyGroup>
 
   <ItemGroup>
@@ -17,6 +18,11 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Contracts\modules\de.playground.aspnet.core.contracts.modules\de.playground.aspnet.core.contracts.modules.csproj" />
+    <ProjectReference Include="..\Modules\de.playground.aspnet.core.modules\de.playground.aspnet.core.modules.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Authors>Stefan Hackauf</Authors>
+    <Company>Stefan Hackauf</Company>
+    <Product>aspnet-core-playground</Product>
+    <PackageProjectUrl>https://github.com/SHackauf/aspnet-core-playground</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SHackauf/aspnet-core-playground</RepositoryUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Contracts\dtos\de.playground.aspnet.core.contracts.dtos\de.playground.aspnet.core.contracts.dtos.csproj" />
+  </ItemGroup>
+
+</Project>

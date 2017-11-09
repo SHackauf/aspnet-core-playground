@@ -7,3 +7,11 @@
 # Project
 src/aspnet-core-webapi/bin/
 src/aspnet-core-webapi/obj/
+src/Contracts/dtos/de.playground.aspnet.core.contracts.dtos/bin/
+src/Contracts/dtos/de.playground.aspnet.core.contracts.dtos/obj/
+src/Contracts/modules/de.playground.aspnet.core.contracts.modules/bin/
+src/Contracts/modules/de.playground.aspnet.core.contracts.modules/obj/
+src/Dtos/de.playground.aspnet.core.dtos/bin/
+src/Dtos/de.playground.aspnet.core.dtos/obj/
+src/Modules/de.playground.aspnet.core.modules/bin/
+src/Modules/de.playground.aspnet.core.modules/obj/

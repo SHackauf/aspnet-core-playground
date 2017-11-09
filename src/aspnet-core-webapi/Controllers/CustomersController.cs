@@ -1,7 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+
+using de.playground.aspnet.core.contracts.modules;
+using de.playground.aspnet.core.dtos;
+
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,82 +14,67 @@ namespace de.playground.aspnet.core.webapi.Controllers
     {
         #region Private Fields
 
-        private readonly Dictionary<int, string> storage;
-        private int nextFreeId = 1;
+        private readonly ICustomerModule customerModule;
 
         #endregion
 
         #region Constructor
 
-        public CustomersController() => this.storage = new Dictionary<int, string>
-            {
-                { nextFreeId++, "Customer 1" },
-                { nextFreeId++, "Customer 2" },
-                { nextFreeId++, "Customer 3" }
-            };
+        public CustomersController(ICustomerModule customerModule) => this.customerModule = customerModule;
 
         #endregion
 
         #region Public Methods
 
         [HttpGet]
-        public IActionResult Get() => this.Ok(this.storage.Values);
+        public async Task<IActionResult> GetAsync() => this.Ok(await this.customerModule.GetCustomersAsync());
 
-        [HttpGet("{id}", Name = nameof(Get))]
-        public IActionResult Get(int id)
+        [HttpGet("{id}", Name = nameof(GetAsync))]
+        public async Task<IActionResult> GetAsync(int id)
         {
-            if (this.storage.ContainsKey(id))
-            {
-                return this.Ok(this.storage[id]);
-            }
-
-            return this.NotFound();
+            var customerDto = await this.customerModule.GetCustomerAsync(id);
+            return customerDto == null ? (IActionResult)this.NotFound() : this.Ok(customerDto);
         }
 
         [HttpHead("{id}")]
-        public IActionResult Head(int id) => this.storage.ContainsKey(id) ? this.Ok() : (IActionResult)this.NotFound();
+        public async Task<IActionResult> HeadAsync(int id) => await this.customerModule.HasCustomerAsync(id) ? this.Ok() : (IActionResult)this.NotFound();
 
         [HttpPost]
-        public IActionResult Post(string customer) // [FromBody]string value
+        public async Task<IActionResult> PostAsync([FromBody]CustomerDto customer)
         {
-            if (string.IsNullOrEmpty(customer))
+            if (customer == null || customer.Id > 0)
             {
                 return this.BadRequest();
             }
 
-            var customerId = nextFreeId++;
-            this.storage.Add(customerId, customer);
-
-            return this.CreatedAtRoute(nameof(this.Get), new { id = customerId }, customer);
+            var customerDto = await this.customerModule.AddCustomerAsync(customer);
+            return customerDto == null
+                ? (IActionResult)this.BadRequest()
+                : this.CreatedAtRoute(nameof(this.GetAsync), new { id = customerDto.Id }, customerDto);
         }
 
         [HttpPut("{id}")]
-        public IActionResult Put(int id, string customer)  // [FromBody]string value
+        public async Task<IActionResult> PutAsync(int id, [FromBody]CustomerDto customer)
         {
-            if (string.IsNullOrEmpty(customer))
+            if (customer == null || customer.Id <= 0 || id != customer.Id)
             {
                 return this.BadRequest();
             }
 
-            if (!this.storage.ContainsKey(id))
-            {
-                return NotFound();
-            }
-
-            this.storage[id] = customer;
-            return this.Ok(customer);
+            var customerDto = await this.customerModule.ModifyCustomerAsync(customer);
+            return customerDto == null ? (IActionResult)this.NotFound() : this.Ok(customerDto);
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
-            if (!this.storage.ContainsKey(id))
+            var customerDto = await this.customerModule.GetCustomerAsync(id);
+            if (customerDto == null)
             {
-                return NotFound();
+                return this.NotFound();
             }
 
-            this.storage.Remove(id);
-            return this.NoContent();
+            return await this.customerModule.DeleteCustomerAsync(customerDto) ? (IActionResult)this.NoContent(): this.NotFound();
         }
 
         #endregion
