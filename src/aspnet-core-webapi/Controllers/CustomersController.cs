@@ -29,7 +29,7 @@ namespace de.playground.aspnet.core.webapi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAsync() => this.Ok(await this.customerModule.GetCustomersAsync());
 
-        [HttpGet("{id}", Name = nameof(GetAsync))]
+        [HttpGet("{id}", Name = nameof(CustomersController) + "_" + nameof(GetAsync))]
         public async Task<IActionResult> GetAsync(int id)
         {
             var customerDto = await this.customerModule.GetCustomerAsync(id);
@@ -50,7 +50,7 @@ namespace de.playground.aspnet.core.webapi.Controllers
             var customerDto = await this.customerModule.AddCustomerAsync(customer);
             return customerDto == null
                 ? (IActionResult)this.BadRequest()
-                : this.CreatedAtRoute(nameof(this.GetAsync), new { id = customerDto.Id }, customerDto);
+                : this.CreatedAtRoute(nameof(CustomersController) + "_" + nameof(GetAsync), new { id = customerDto.Id }, customerDto);
         }
 
         [HttpPut("{id}")]

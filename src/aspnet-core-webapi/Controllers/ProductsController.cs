@@ -30,7 +30,7 @@ namespace de.playground.aspnet.core.webapi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAsync(int customerId) => this.Ok(await this.productModule.GetProductsAsync(customerId));
 
-        [HttpGet("{id}", Name = nameof(GetAsync))]
+        [HttpGet("{id}", Name = nameof(ProductsController) + "_" + nameof(GetAsync))]
         public async Task<IActionResult> GetAsync(int customerId, int id)
         {
             var productDto = await this.productModule.GetProductAsync(customerId, id);
@@ -51,7 +51,7 @@ namespace de.playground.aspnet.core.webapi.Controllers
             var productDto = await this.productModule.AddProductAsync(product);
             return productDto == null
                 ? (IActionResult)this.BadRequest()
-                : this.CreatedAtRoute(nameof(this.GetAsync), new { id = productDto.Id }, productDto);
+                : this.CreatedAtRoute(nameof(ProductsController) + "_" + nameof(GetAsync), new { id = productDto.Id }, productDto);
         }
 
         [HttpPut("{id}")]
