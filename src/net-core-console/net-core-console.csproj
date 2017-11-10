@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <Authors>Stefan Hackauf</Authors>
+    <Company>Stefan Hackauf</Company>
+    <Product>aspnet-core-playground</Product>
+    <PackageProjectUrl>https://github.com/SHackauf/aspnet-core-playground</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SHackauf/aspnet-core-playground</RepositoryUrl>
+    <AssemblyName>de.playground.net.core.console</AssemblyName>
+    <RootNamespace>de.playground.net.core.console</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Modules\de.playground.aspnet.core.modules\de.playground.aspnet.core.modules.csproj" />
+  </ItemGroup>
+
+</Project>
