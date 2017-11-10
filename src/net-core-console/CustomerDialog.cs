@@ -1,18 +1,29 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-using de.playground.aspnet.core.modules;
+using de.playground.aspnet.core.contracts.modules;
 
 namespace de.playground.net.core.console
 {
-    internal class CustomerDialog
+    public class CustomerDialog
     {
+        #region Private Fields
+
+        private readonly ICustomerModule customerModule;
+
+        #endregion
+
+        #region Constructor
+
+        public CustomerDialog(ICustomerModule customerModule) => this.customerModule = customerModule;
+
+        #endregion
+
         #region Public Methods
 
         public async Task ShowAsync()
         {
-            var customerModule = new CustomerModule();
-            var customers = await customerModule.GetCustomersAsync();
+            var customers = await this.customerModule.GetCustomersAsync();
 
             while (true)
             {

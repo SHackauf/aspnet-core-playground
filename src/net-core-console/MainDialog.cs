@@ -1,12 +1,22 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace de.playground.net.core.console
 {
-    internal class MainDialog
+    public class MainDialog
     {
+        #region Private Fields
+
+        private readonly CustomerDialog customerDialog;
+
+        #endregion
+
+        #region Constructor
+
+        public MainDialog(CustomerDialog customerDialog) => this.customerDialog = customerDialog;
+
+        #endregion
+
         #region Public Methods
 
         public async Task ShowAsync()
@@ -27,7 +37,7 @@ namespace de.playground.net.core.console
                 switch (input)
                 {
                     case "1":
-                        await new CustomerDialog().ShowAsync();
+                        await this.customerDialog.ShowAsync();
                         break;
 
                     case "":
