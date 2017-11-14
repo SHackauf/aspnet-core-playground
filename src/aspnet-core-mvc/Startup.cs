@@ -42,7 +42,7 @@ namespace de.playground.aspnet.core.mvc
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                //app.UseExceptionHandler("/Home/Error");
             }
 
             app.UseStaticFiles();
