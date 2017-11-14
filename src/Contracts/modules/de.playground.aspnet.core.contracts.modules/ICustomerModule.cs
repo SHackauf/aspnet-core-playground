@@ -13,6 +13,8 @@ namespace de.playground.aspnet.core.contracts.modules
 
         Task<bool> HasCustomerAsync(int id);
 
+        Task<ICustomerDto> CreateCustomerAsync();
+
         Task<ICustomerDto> AddCustomerAsync(ICustomerDto customer);
 
         Task<ICustomerDto> ModifyCustomerAsync(ICustomerDto customer);

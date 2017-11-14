@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using de.playground.aspnet.core.contracts.modules;
+using de.playground.aspnet.core.modules;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -30,6 +32,9 @@ namespace de.playground.aspnet.core.mvc
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+
+            services.AddTransient(typeof(ICustomerModule), typeof(CustomerModule));
+            services.AddTransient(typeof(IProductModule), typeof(ProductModule));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
