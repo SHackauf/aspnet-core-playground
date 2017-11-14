@@ -5,26 +5,30 @@
     ViewData["Title"] = "Customer" + @Model.Name;
 }
 
-<div>
-    <h4>Customer</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Save</a> |
-    <a asp-action="Index">Cancel</a>
-</div>
+<form asp-action="Edit">
+    <div>
+        <h4>Customer</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly"></div>
+        <input type="hidden" asp-for="Id" />
 
+        <div>
+            <label asp-for="Name"></label>
+            <div>
+                <input asp-for="Name" />
+                <span asp-validation-for="Name"></span>
+            </div>
+        </div>
+
+        <div>
+            <div>
+                <input type="submit" value="Save" class="btn btn-default" />
+                <a asp-action="Index">Cancel</a>
+            </div>
+        </div>
+    </div>
+</form>
+
+@*@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}*@
