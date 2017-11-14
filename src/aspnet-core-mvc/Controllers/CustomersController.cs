@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using de.playground.aspnet.core.contracts.modules;
+using de.playground.aspnet.core.mvc.Models;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -13,13 +15,18 @@ namespace de.playground.aspnet.core.mvc.Controllers
     {
         #region Private Fields
 
-        private ICustomerModule customerModule;
+        private readonly ICustomerModule customerModule;
+        private readonly IMapper mapper;
 
         #endregion
 
         #region Constructor
 
-        public CustomersController(ICustomerModule customerModule) => this.customerModule = customerModule;
+        public CustomersController(ICustomerModule customerModule, IMapper mapper)
+        {
+            this.customerModule = customerModule;
+            this.mapper = mapper;
+        }
 
         #endregion
 
@@ -28,13 +35,15 @@ namespace de.playground.aspnet.core.mvc.Controllers
         public async Task<IActionResult> Index()
         {
             var customers = await this.customerModule.GetCustomersAsync();
-            return this.View(customers);
+            var customerModels = this.mapper.Map<IEnumerable<CustomerModel>>(customers);
+            return this.View(customerModels);
         }
 
         public async Task<IActionResult> Create()
         {
             var customer = await this.customerModule.CreateCustomerAsync();
-            return this.View(nameof(this.Edit), customer);
+            var customerModel = this.mapper.Map<CustomerModel>(customer);
+            return this.View(nameof(this.Edit), customerModel);
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -45,7 +54,13 @@ namespace de.playground.aspnet.core.mvc.Controllers
             }
 
             var customer = await this.customerModule.GetCustomerAsync(id.Value);
-            return customer == null ? (IActionResult)this.NotFound() : this.View(customer);
+            if (customer == null)
+            {
+                return this.NotFound();
+            }
+
+            var customerModel = this.mapper.Map<CustomerModel>(customer);
+            return this.View(customerModel);
         }
 
         public async Task<IActionResult> Delete(int? id)

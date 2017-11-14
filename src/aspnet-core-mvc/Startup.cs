@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using de.playground.aspnet.core.contracts.modules;
 using de.playground.aspnet.core.modules;
 using Microsoft.AspNetCore.Builder;
@@ -32,6 +33,7 @@ namespace de.playground.aspnet.core.mvc
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddAutoMapper();
 
             services.AddTransient(typeof(ICustomerModule), typeof(CustomerModule));
             services.AddTransient(typeof(IProductModule), typeof(ProductModule));
