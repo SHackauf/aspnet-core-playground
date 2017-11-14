@@ -9,10 +9,7 @@ namespace aspnet_core_mvc.Controllers
 {
     public class HomeController : Controller
     {
-        public string Index()
-        {
-            return HtmlEncoder.Default.Encode("HomeController");
-        }
+        public IActionResult Index() => View();
 
         public string Action()
         {
