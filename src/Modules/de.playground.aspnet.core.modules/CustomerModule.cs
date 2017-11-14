@@ -33,6 +33,8 @@ namespace de.playground.aspnet.core.modules
 
         public Task<bool> HasCustomerAsync(int id) => Task.FromResult(storage.Any(customer => customer.Id == id));
 
+        public Task<ICustomerDto> CreateCustomerAsync() => Task.FromResult<ICustomerDto>(new CustomerDto { Id = 0, Name = string.Empty });
+
         public Task<ICustomerDto> AddCustomerAsync(ICustomerDto customer)
         {
             if (customer == null)
