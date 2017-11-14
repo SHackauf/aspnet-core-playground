@@ -11,6 +11,8 @@ namespace de.playground.aspnet.core.mvc.Models
         public int Id { get; set; }
 
         [Display(Name = "Customer name")]
+        [StringLength(60, MinimumLength = 1)]
+        [Required]
         public string Name { get; set; }
     }
 }
