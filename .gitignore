@@ -8,6 +8,7 @@
 /src/aspnet-core-mvc/aspnet-core-mvc.csproj.user
 /src/aspnet-core-mvc/bin/
 /src/aspnet-core-mvc/obj/
+/src/aspnet-core-mvc/Properties/PublishProfiles/FolderProfile.pubxml.user
 /src/aspnet-core-webapi/bin/
 /src/aspnet-core-webapi/obj/
 /src/net-core-console/bin/
