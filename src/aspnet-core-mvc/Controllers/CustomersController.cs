@@ -12,6 +12,14 @@ namespace de.playground.aspnet.core.mvc.Controllers
     {
         public IActionResult Index()
         {
+            ViewData["Customers"] = new string [] 
+            {
+                "Customer1",
+                "Customer2",
+                "Customer3",
+                "Customer4"
+            };
+
             return View();
         }
     }

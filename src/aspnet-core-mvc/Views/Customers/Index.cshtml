@@ -5,3 +5,9 @@
 
 <h2>Customers</h2>
 
+<ul>
+    @foreach (var customer in ViewData["Customers"] as IEnumerable<string>)
+    {
+        <li>@customer</li>
+    }
+</ul>
