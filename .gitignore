@@ -5,6 +5,8 @@
 .vs/
 
 # Project
+src/aspnet-core-mvc/bin/
+src/aspnet-core-mvc/obj/
 src/aspnet-core-webapi/bin/
 src/aspnet-core-webapi/obj/
 src/net-core-console/bin/
