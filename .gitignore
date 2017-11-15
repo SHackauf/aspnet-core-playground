@@ -17,6 +17,8 @@
 /src/Contracts/dtos/de.playground.aspnet.core.contracts.dtos/obj/
 /src/Contracts/modules/de.playground.aspnet.core.contracts.modules/bin/
 /src/Contracts/modules/de.playground.aspnet.core.contracts.modules/obj/
+/src/Contracts/utils/de.playground.aspnet.core.contracts.utils.logger/obj
+/src/Contracts/utils/de.playground.aspnet.core.contracts.utils.logger/bin
 /src/Dtos/de.playground.aspnet.core.dtos/bin/
 /src/Dtos/de.playground.aspnet.core.dtos/obj/
 /src/Modules/de.playground.aspnet.core.modules/bin/

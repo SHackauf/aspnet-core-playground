@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using de.playground.aspnet.core.contracts.dtos;
 using de.playground.aspnet.core.contracts.modules;
+using de.playground.aspnet.core.contracts.utils.logger;
 using de.playground.aspnet.core.dtos;
 using Microsoft.Extensions.Logging;
 
@@ -42,7 +43,7 @@ namespace de.playground.aspnet.core.modules
         public Task<IImmutableList<IProductDto>> GetProductsAsync(int customerId)
         {
             var productDtos = storage.Where(product => product.CustomerId == customerId).ToImmutableList();
-            this.logger.LogDebug($"{nameof(this.GetProductsAsync)}: [count: {productDtos.Count()}]");
+            this.logger.LogDebug(LoggingEvents.GetItems, $"{nameof(this.GetProductsAsync)}: [count: {productDtos.Count()}]");
 
             return Task.FromResult<IImmutableList<IProductDto>>(productDtos);
         }
@@ -50,7 +51,7 @@ namespace de.playground.aspnet.core.modules
         public Task<IProductDto> GetProductAsync(int customerId, int id)
         {
             var productDto = storage.FirstOrDefault(product => product.CustomerId == customerId && product.Id == id);
-            this.logger.LogDebug($"{nameof(this.GetProductAsync)}: [id: {id}][found: {productDto != null}]");
+            this.logger.LogDebug(LoggingEvents.GetItem, $"{nameof(this.GetProductAsync)}: [id: {id}][found: {productDto != null}]");
 
             return Task.FromResult(productDto);
         }
@@ -58,7 +59,7 @@ namespace de.playground.aspnet.core.modules
         public Task<bool> HasProductAsync(int customerId, int id)
         {
             var found = storage.Any(product => product.CustomerId == customerId && product.Id == id);
-            this.logger.LogDebug($"{nameof(this.HasProductAsync)}: [id: {id}][found: {found}]");
+            this.logger.LogDebug(LoggingEvents.HasItem, $"{nameof(this.HasProductAsync)}: [id: {id}][found: {found}]");
 
             return Task.FromResult(found);
         }
@@ -79,7 +80,7 @@ namespace de.playground.aspnet.core.modules
 
             product.Id = nextFreeId++;
             storage.Add(product);
-            this.logger.LogInformation($"{nameof(this.AddProductAsync)}: successful [Id: {product.Id}]");
+            this.logger.LogInformation(LoggingEvents.InsertItem, $"{nameof(this.AddProductAsync)}: successful [Id: {product.Id}]");
 
             return Task.FromResult(product);
         }
@@ -99,7 +100,7 @@ namespace de.playground.aspnet.core.modules
 
             storage.Remove(productDto);
             storage.Add(product);
-            this.logger.LogInformation($"{nameof(this.ModifyProductAsync)}: successful [Id: {product.Id}]");
+            this.logger.LogInformation(LoggingEvents.UpdateItem, $"{nameof(this.ModifyProductAsync)}: successful [Id: {product.Id}]");
 
             return Task.FromResult(product);
         }
@@ -113,7 +114,7 @@ namespace de.playground.aspnet.core.modules
             }
 
             storage.Remove(productDto);
-            this.logger.LogInformation($"{nameof(this.DeleteProductAsync)}: successful [Id: {product.Id}]");
+            this.logger.LogInformation(LoggingEvents.DeleteItem, $"{nameof(this.DeleteProductAsync)}: successful [Id: {product.Id}]");
 
             return Task.FromResult(true);
         }

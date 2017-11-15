@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using de.playground.aspnet.core.contracts.dtos;
 using de.playground.aspnet.core.contracts.modules;
+using de.playground.aspnet.core.contracts.utils.logger;
 using de.playground.aspnet.core.dtos;
 
 using Microsoft.Extensions.Logging;
@@ -40,7 +41,7 @@ namespace de.playground.aspnet.core.modules
         public Task<IImmutableList<ICustomerDto>> GetCustomersAsync()
         {
             var customerDtos = storage.ToImmutableList();
-            this.logger.LogDebug($"{nameof(this.GetCustomersAsync)}: [count: {customerDtos.Count()}]");
+            this.logger.LogDebug(LoggingEvents.GetItems, $"{nameof(this.GetCustomersAsync)}: [count: {customerDtos.Count()}]");
 
             return Task.FromResult<IImmutableList<ICustomerDto>>(customerDtos);
         }
@@ -48,7 +49,7 @@ namespace de.playground.aspnet.core.modules
         public Task<ICustomerDto> GetCustomerAsync(int id)
         {
             var customerDto = storage.FirstOrDefault(customer => customer.Id == id);
-            this.logger.LogDebug($"{nameof(this.GetCustomerAsync)}: [id: {id}][found: {customerDto != null}]");
+            this.logger.LogDebug(LoggingEvents.GetItem, $"{nameof(this.GetCustomerAsync)}: [id: {id}][found: {customerDto != null}]");
 
             return Task.FromResult(customerDto);
         }
@@ -56,7 +57,7 @@ namespace de.playground.aspnet.core.modules
         public Task<bool> HasCustomerAsync(int id)
         {
             var found = storage.Any(customer => customer.Id == id);
-            this.logger.LogDebug($"{nameof(this.HasCustomerAsync)}: [id: {id}][found: {found}]");
+            this.logger.LogDebug(LoggingEvents.HasItem, $"{nameof(this.HasCustomerAsync)}: [id: {id}][found: {found}]");
 
             return Task.FromResult(found);
         }
@@ -64,7 +65,7 @@ namespace de.playground.aspnet.core.modules
         public Task<ICustomerDto> CreateCustomerAsync()
         {
             var customer = new CustomerDto { Id = 0, Name = string.Empty };
-            this.logger.LogDebug($"{nameof(this.CreateCustomerAsync)}: [id: {customer.Id}]");
+            this.logger.LogDebug(LoggingEvents.CreateItem, $"{nameof(this.CreateCustomerAsync)}: [id: {customer.Id}]");
 
             return Task.FromResult<ICustomerDto>(customer);
         }
@@ -83,7 +84,7 @@ namespace de.playground.aspnet.core.modules
 
             customer.Id = nextFreeId++;
             storage.Add(customer);
-            this.logger.LogInformation($"{nameof(this.AddCustomerAsync)}: successful [Id: {customer.Id}]");
+            this.logger.LogInformation(LoggingEvents.InsertItem, $"{nameof(this.AddCustomerAsync)}: successful [Id: {customer.Id}]");
 
             return Task.FromResult(customer);
         }
@@ -103,7 +104,7 @@ namespace de.playground.aspnet.core.modules
 
             storage.Remove(customerDto);
             storage.Add(customer);
-            this.logger.LogInformation($"{nameof(this.ModifyCustomerAsync)}: successful [Id: {customer.Id}]");
+            this.logger.LogInformation(LoggingEvents.UpdateItem, $"{nameof(this.ModifyCustomerAsync)}: successful [Id: {customer.Id}]");
 
             return Task.FromResult(customer);
         }
@@ -118,7 +119,7 @@ namespace de.playground.aspnet.core.modules
 
             // TODO: Remove products
             storage.Remove(customerDto);
-            this.logger.LogInformation($"{nameof(this.DeleteCustomerAsync)}: successful [Id: {customer.Id}]");
+            this.logger.LogInformation(LoggingEvents.DeleteItem, $"{nameof(this.DeleteCustomerAsync)}: successful [Id: {customer.Id}]");
 
             return Task.FromResult(true);
         }
