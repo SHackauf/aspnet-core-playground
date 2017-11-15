@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Logging;
 
 namespace de.playground.net.core.console
 {
@@ -7,13 +8,18 @@ namespace de.playground.net.core.console
     {
         #region Private Fields
 
+        private readonly ILogger logger;
         private readonly CustomerDialog customerDialog;
 
         #endregion
 
         #region Constructor
 
-        public MainDialog(CustomerDialog customerDialog) => this.customerDialog = customerDialog;
+        public MainDialog(CustomerDialog customerDialog, ILogger<MainDialog> logger)
+        {
+            this.customerDialog = customerDialog ?? throw new ArgumentNullException(nameof(customerDialog));
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
 
         #endregion
 
@@ -23,6 +29,8 @@ namespace de.playground.net.core.console
         {
             while (true)
             {
+                this.logger.LogDebug($"{nameof(this.ShowAsync)}: print");
+
                 Console.Clear();
                 Console.WriteLine("====================================");
                 Console.WriteLine("   net-core-console");
@@ -34,6 +42,8 @@ namespace de.playground.net.core.console
                 Console.WriteLine("====================================");
 
                 var input = Console.ReadLine();
+                this.logger.LogDebug($"{nameof(this.ShowAsync)}: [input: {input}]");
+
                 switch (input)
                 {
                     case "1":

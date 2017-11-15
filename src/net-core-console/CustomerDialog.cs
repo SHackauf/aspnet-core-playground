@@ -3,19 +3,26 @@ using System.Threading.Tasks;
 
 using de.playground.aspnet.core.contracts.modules;
 
+using Microsoft.Extensions.Logging;
+
 namespace de.playground.net.core.console
 {
     public class CustomerDialog
     {
         #region Private Fields
 
+        private readonly ILogger logger;
         private readonly ICustomerModule customerModule;
 
         #endregion
 
         #region Constructor
 
-        public CustomerDialog(ICustomerModule customerModule) => this.customerModule = customerModule;
+        public CustomerDialog(ICustomerModule customerModule, ILogger<MainDialog> logger)
+        {
+            this.customerModule = customerModule ?? throw new ArgumentNullException(nameof(customerModule));
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        }
 
         #endregion
 
@@ -27,6 +34,8 @@ namespace de.playground.net.core.console
 
             while (true)
             {
+                this.logger.LogDebug($"{nameof(this.ShowAsync)}: print");
+
                 Console.Clear();
                 Console.WriteLine("====================================");
                 Console.WriteLine("   net-core-console");
@@ -42,6 +51,8 @@ namespace de.playground.net.core.console
                 Console.WriteLine("====================================");
 
                 var input = Console.ReadLine();
+                this.logger.LogDebug($"{nameof(this.ShowAsync)}: [input: {input}]");
+
                 switch (input)
                 {
                     case "":
