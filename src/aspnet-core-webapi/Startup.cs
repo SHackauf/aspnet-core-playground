@@ -35,6 +35,7 @@ namespace de.playground.aspnet.core.webapi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddApiVersioning();
 
             services.AddTransient(typeof(ICustomerModule), typeof(CustomerModule));
             services.AddTransient(typeof(IProductModule), typeof(ProductModule));
