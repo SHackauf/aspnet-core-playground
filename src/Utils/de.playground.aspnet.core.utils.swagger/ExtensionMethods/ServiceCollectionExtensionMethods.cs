@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using de.playground.aspnet.core.utils.swagger.DocumentFilters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.PlatformAbstractions;
 using Swashbuckle.AspNetCore.Swagger;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
@@ -12,7 +14,7 @@ namespace de.playground.aspnet.core.utils.swagger.ExtensionMethods
 {
     public static class ServiceCollectionExtensionMethods
     {
-        public static IServiceCollection AddSwaggerGenMultiVersions(this IServiceCollection serviceCollection, Func<IEnumerable<Info>> getVersions, Func<ApiVersion, string> formatVersion)
+        public static IServiceCollection AddSwaggerGenMultiVersions(this IServiceCollection serviceCollection, Func<string> getXmlCommentFile, Func<IEnumerable<Info>> getVersions, Func<ApiVersion, string> formatVersion)
         {
             return serviceCollection.AddSwaggerGen(setupAction =>
             {
@@ -26,6 +28,10 @@ namespace de.playground.aspnet.core.utils.swagger.ExtensionMethods
 
                 setupAction.OperationFilter<RemoveVersionParameters>();
                 setupAction.DocumentFilter<SetVersionInPaths>();
+
+                var basePath = PlatformServices.Default.Application.ApplicationBasePath;
+                var xmlPath = Path.Combine(basePath, getXmlCommentFile());
+                setupAction.IncludeXmlComments(xmlPath);
             });
         }
     }

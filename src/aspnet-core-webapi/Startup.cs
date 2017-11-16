@@ -37,7 +37,7 @@ namespace de.playground.aspnet.core.webapi
 
         public IEnumerable<(Info SwaggerInfo, string SwaggerEndpointUrl, string SwaggerEndpointDescription)> ApiVersions { get; } = new[]
         {
-            (new Info { Title = "API V1", Version = "v1" }, "/swagger/v1/swagger.json", "V1 Docs")
+            (new Info { Title = "aspnet-core-webapi - V1", Version = "v1" }, "/swagger/v1/swagger.json", "aspnet-core-webapi - V1 Docs")
         };
 
         #endregion
@@ -51,7 +51,10 @@ namespace de.playground.aspnet.core.webapi
             services.AddMvc();
             services.AddApiVersioning();
 
-            services.AddSwaggerGenMultiVersions( () => this.ApiVersions.Select(versions => versions.SwaggerInfo), apiVersion => $"v{apiVersion.ToString()}");
+            services.AddSwaggerGenMultiVersions(
+                () => "de.playground.aspnet.core.webapi.xml",
+                () => this.ApiVersions.Select(versions => versions.SwaggerInfo), 
+                apiVersion => $"v{apiVersion.ToString()}");
 
             services.AddTransient(typeof(ICustomerModule), typeof(CustomerModule));
             services.AddTransient(typeof(IProductModule), typeof(ProductModule));
