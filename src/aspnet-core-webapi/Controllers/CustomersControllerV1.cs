@@ -9,8 +9,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace de.playground.aspnet.core.webapi.Controllers
 {
-    [Route("api/[controller]")]
-    public class CustomersController : Controller
+    [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/customers")]
+    public class CustomersControllerV1 : Controller
     {
         #region Private Fields
 
@@ -20,7 +21,7 @@ namespace de.playground.aspnet.core.webapi.Controllers
 
         #region Constructor
 
-        public CustomersController(ICustomerModule customerModule) => this.customerModule = customerModule;
+        public CustomersControllerV1(ICustomerModule customerModule) => this.customerModule = customerModule;
 
         #endregion
 
@@ -29,7 +30,7 @@ namespace de.playground.aspnet.core.webapi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAsync() => this.Ok(await this.customerModule.GetCustomersAsync());
 
-        [HttpGet("{id}", Name = nameof(CustomersController) + "_" + nameof(GetAsync))]
+        [HttpGet("{id}", Name = nameof(CustomersControllerV1) + "_" + nameof(GetAsync))]
         public async Task<IActionResult> GetAsync(int id)
         {
             var customerDto = await this.customerModule.GetCustomerAsync(id);
@@ -50,7 +51,7 @@ namespace de.playground.aspnet.core.webapi.Controllers
             var customerDto = await this.customerModule.AddCustomerAsync(customer);
             return customerDto == null
                 ? (IActionResult)this.BadRequest()
-                : this.CreatedAtRoute(nameof(CustomersController) + "_" + nameof(GetAsync), new { id = customerDto.Id }, customerDto);
+                : this.CreatedAtRoute(nameof(CustomersControllerV1) + "_" + nameof(GetAsync), new { id = customerDto.Id }, customerDto);
         }
 
         [HttpPut("{id}")]

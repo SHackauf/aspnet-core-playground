@@ -10,8 +10,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace de.playground.aspnet.core.webapi.Controllers
 {
-    [Route("api/customers/{customerid}/[controller]")]
-    public class ProductsController : Controller
+    [ApiVersion("1")]
+    [Route("api/v{version:apiVersion}/customers/{customerid}/products")]
+    public class ProductsControllerV1 : Controller
     {
         #region Private Fields
 
@@ -21,7 +22,7 @@ namespace de.playground.aspnet.core.webapi.Controllers
 
         #region Constructor
 
-        public ProductsController(IProductModule productModule) => this.productModule = productModule;
+        public ProductsControllerV1(IProductModule productModule) => this.productModule = productModule;
 
         #endregion
 
@@ -30,7 +31,7 @@ namespace de.playground.aspnet.core.webapi.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAsync(int customerId) => this.Ok(await this.productModule.GetProductsAsync(customerId));
 
-        [HttpGet("{id}", Name = nameof(ProductsController) + "_" + nameof(GetAsync))]
+        [HttpGet("{id}", Name = nameof(ProductsControllerV1) + "_" + nameof(GetAsync))]
         public async Task<IActionResult> GetAsync(int customerId, int id)
         {
             var productDto = await this.productModule.GetProductAsync(customerId, id);
@@ -51,7 +52,7 @@ namespace de.playground.aspnet.core.webapi.Controllers
             var productDto = await this.productModule.AddProductAsync(product);
             return productDto == null
                 ? (IActionResult)this.BadRequest()
-                : this.CreatedAtRoute(nameof(ProductsController) + "_" + nameof(GetAsync), new { id = productDto.Id }, productDto);
+                : this.CreatedAtRoute(nameof(ProductsControllerV1) + "_" + nameof(GetAsync), new { id = productDto.Id }, productDto);
         }
 
         [HttpPut("{id}")]
