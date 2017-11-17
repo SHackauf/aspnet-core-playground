@@ -5,40 +5,48 @@
     ViewData["Title"] = "Customers";
 }
 
-<div>
-    <h2>Customers</h2>
-    <hr />
-    <p>
-        <a asp-action="Create">Create New</a>
-    </p>
-    <table class="table">
+<div class="row">
+    <div class="col">
+        <h2>Customers</h2>
+        <hr />
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <a class="btn btn-primary btn-sm" asp-action="Create" role="button">Create New</a>
+    </div>
+</div>
+
+<div class="row">
+    <table class="table table-striped">
         <thead>
             <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Id)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Name)
-                </th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Id)</th>
+                <th scope="col">@Html.DisplayNameFor(model => model.Name)</th>
+                <th scope="col"></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
                 <tr>
-                    <td>
+                    <td scope="row">
                         @Html.DisplayFor(modelItem => item.Id)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Name)
                     </td>
                     <td>
-                        <a asp-action="Show" asp-route-id="@item.Id">Show</a> |
-                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                        <div class="btn-group" role="group" aria-label="Basic example">
+                            <a class="btn btn-info btn-sm" asp-action="Show" asp-route-id="@item.Id" role="button">Show</a>
+                            <a class="btn btn-success btn-sm" asp-action="Edit" asp-route-id="@item.Id" role="button">Edit</a>
+                            <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id" role="button">Delete</a>
+                        </div>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
+

@@ -5,26 +5,38 @@
     ViewData["Title"] = "Customer" + @Model.Name;
 }
 
-<div>
-    <h4>Customer</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Id)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Id)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
+<div class="row">
+    <div class="col">
+        <h2>Customer</h2>
+        <hr />
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model.Id">Edit</a> |
-    <a asp-action="Index">Close</a>
+
+<div class="row">
+    <div class="col">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Id)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Id)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Name)
+            </dd>
+        </dl>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <div class="btn-group" role="group" aria-label="Basic example">
+            <a class="btn btn-info" asp-action="Index" role="button">Close</a>
+            <a class="btn btn-success" asp-action="Edit" asp-route-id="@Model.Id" role="button">Edit</a>
+        </div>
+    </div>
 </div>
 
