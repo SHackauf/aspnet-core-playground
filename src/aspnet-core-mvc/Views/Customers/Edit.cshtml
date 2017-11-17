@@ -5,30 +5,38 @@
     ViewData["Title"] = "Customer" + @Model.Name;
 }
 
-<form asp-action="Edit">
-    <div>
-        <h4>Customer</h4>
+<div class="row">
+    <div class="col">
+        <h2>Customer</h2>
         <hr />
-        <div asp-validation-summary="ModelOnly"></div>
-        <input type="hidden" asp-for="Id" />
-
-        <div>
-            <label asp-for="Name"></label>
-            <div>
-                <input asp-for="Name" />
-                <span asp-validation-for="Name"></span>
-            </div>
-        </div>
-
-        <div>
-            <div>
-                <input type="submit" value="Save" class="btn btn-default" />
-                <a asp-action="Index">Cancel</a>
-            </div>
-        </div>
     </div>
-</form>
+</div>
 
-@*@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}*@
+<div class="row">
+    <div class="col">
+        <form asp-action="Edit">
+            <div>
+                <div asp-validation-summary="ModelOnly"></div>
+                <input type="hidden" asp-for="Id" />
+
+                <div class="form-group">
+                    <label for="inputName" asp-for="Name"/>
+                    <input id="inputName" asp-for="Name" class="form-control" placeholder="Enter name"/>
+                    <span asp-validation-for="Name"></span>
+                </div>
+
+                <div>
+                    <div class="btn-group" role="group" aria-label="Basic example">
+                        <a class="btn btn-info" asp-action="Index" role="button">Cancel</a>
+                        <input type="submit" value="Save" class="btn btn-success btn-default" />
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        @*@section Scripts {
+                @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+            }*@
+        
+    </div>
+</div>
