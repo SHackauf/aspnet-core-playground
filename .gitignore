@@ -26,5 +26,7 @@
 /src/Dtos/de.playground.aspnet.core.dtos/obj/
 /src/Modules/de.playground.aspnet.core.modules/bin/
 /src/Modules/de.playground.aspnet.core.modules/obj/
+/src/Servers/de.playground.aspnet.core.servers.middlewares/bin/
+/src/Servers/de.playground.aspnet.core.servers.middlewares/obj/
 /src/Utils/de.playground.aspnet.core.utils.swagger/bin/
 /src/Utils/de.playground.aspnet.core.utils.swagger/obj/

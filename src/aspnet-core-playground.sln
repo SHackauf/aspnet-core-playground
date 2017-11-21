@@ -27,7 +27,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "de.playground.aspnet.core.c
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{14CF8397-805C-4A5E-8C41-6B5B015B7ACB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "de.playground.aspnet.core.utils.swagger", "Utils\de.playground.aspnet.core.utils.swagger\de.playground.aspnet.core.utils.swagger.csproj", "{63D1CD50-269A-4D57-A9D8-CEA3837ABEF2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "de.playground.aspnet.core.utils.swagger", "Utils\de.playground.aspnet.core.utils.swagger\de.playground.aspnet.core.utils.swagger.csproj", "{63D1CD50-269A-4D57-A9D8-CEA3837ABEF2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Servers", "Servers", "{11019AB8-18D6-4F4E-8EEC-8E85155BF661}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "de.playground.aspnet.core.servers.middlewares", "Servers\de.playground.aspnet.core.servers.middlewares\de.playground.aspnet.core.servers.middlewares.csproj", "{0D24F668-9C19-4BDC-813D-64EC7337FF9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +75,10 @@ Global
 		{63D1CD50-269A-4D57-A9D8-CEA3837ABEF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{63D1CD50-269A-4D57-A9D8-CEA3837ABEF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{63D1CD50-269A-4D57-A9D8-CEA3837ABEF2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D24F668-9C19-4BDC-813D-64EC7337FF9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D24F668-9C19-4BDC-813D-64EC7337FF9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D24F668-9C19-4BDC-813D-64EC7337FF9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D24F668-9C19-4BDC-813D-64EC7337FF9B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,6 +90,7 @@ Global
 		{9A2FB16F-4746-4E3A-B641-386ADEEECF86} = {04E5F26D-86C5-4FF0-A979-9EBF99394BDB}
 		{294068B8-E168-46E3-BF84-5684BCD2D9E9} = {510548C6-6568-4196-BAFF-D6EFF746C94B}
 		{63D1CD50-269A-4D57-A9D8-CEA3837ABEF2} = {14CF8397-805C-4A5E-8C41-6B5B015B7ACB}
+		{0D24F668-9C19-4BDC-813D-64EC7337FF9B} = {11019AB8-18D6-4F4E-8EEC-8E85155BF661}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C1A3876-5607-4D58-AFF9-F8C82BAFE93B}
