@@ -50,6 +50,7 @@ namespace de.playground.aspnet.core.webapi
         {
             services.AddMvc();
             services.AddApiVersioning();
+            services.AddResponseCompression();
 
             services.AddSwaggerGenMultiVersions(
                 () => "de.playground.aspnet.core.webapi.xml",
@@ -70,6 +71,8 @@ namespace de.playground.aspnet.core.webapi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseResponseCompression();
 
             app.UseMvc();
 
