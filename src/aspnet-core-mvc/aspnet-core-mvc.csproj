@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Contracts\modules\de.playground.aspnet.core.contracts.modules\de.playground.aspnet.core.contracts.modules.csproj" />
     <ProjectReference Include="..\Modules\de.playground.aspnet.core.modules\de.playground.aspnet.core.modules.csproj" />
+    <ProjectReference Include="..\Servers\de.playground.aspnet.core.servers.middlewares\de.playground.aspnet.core.servers.middlewares.csproj" />
   </ItemGroup>
 
   <ItemGroup>

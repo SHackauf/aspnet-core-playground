@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using de.playground.aspnet.core.contracts.modules;
 using de.playground.aspnet.core.modules;
+using de.playground.aspnet.core.servers.middlewares.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -72,6 +73,7 @@ namespace de.playground.aspnet.core.mvc
                 //app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseExample();
             app.UseStaticFiles();
             app.UseResponseCompression();
 
