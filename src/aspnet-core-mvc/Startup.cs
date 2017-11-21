@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using de.playground.aspnet.core.contracts.modules;
 using de.playground.aspnet.core.modules;
+using de.playground.aspnet.core.servers.middlewares.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -39,6 +42,16 @@ namespace de.playground.aspnet.core.mvc
         {
             services.AddMvc();
             services.AddAutoMapper();
+            services.AddResponseCompression(options =>
+            {
+                options.Providers.Add<GzipCompressionProvider>();
+                options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "image/svg+xml" });
+            });
+
+            services.Configure<GzipCompressionProviderOptions>(options =>
+            {
+                options.Level = CompressionLevel.Fastest;
+            });
 
             services.AddTransient(typeof(ICustomerModule), typeof(CustomerModule));
             services.AddTransient(typeof(IProductModule), typeof(ProductModule));
@@ -60,7 +73,9 @@ namespace de.playground.aspnet.core.mvc
                 //app.UseExceptionHandler("/Home/Error");
             }
 
+            app.UseExample();
             app.UseStaticFiles();
+            app.UseResponseCompression();
 
             app.UseMvc(routes =>
             {

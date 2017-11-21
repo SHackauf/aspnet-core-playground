@@ -13,6 +13,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 using de.playground.aspnet.core.utils.swagger.ExtensionMethods;
+using de.playground.aspnet.core.servers.middlewares.ExtensionMethods;
 
 namespace de.playground.aspnet.core.webapi
 {
@@ -50,6 +51,7 @@ namespace de.playground.aspnet.core.webapi
         {
             services.AddMvc();
             services.AddApiVersioning();
+            services.AddResponseCompression();
 
             services.AddSwaggerGenMultiVersions(
                 () => "de.playground.aspnet.core.webapi.xml",
@@ -70,6 +72,10 @@ namespace de.playground.aspnet.core.webapi
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseResponseCompression();
+
+            app.UseExample();
 
             app.UseMvc();
 
