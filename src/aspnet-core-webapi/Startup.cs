@@ -14,6 +14,8 @@ using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 using de.playground.aspnet.core.utils.swagger.ExtensionMethods;
 using de.playground.aspnet.core.servers.middlewares.ExtensionMethods;
+using de.playground.aspnet.core.contracts.dataaccesses;
+using de.playground.aspnet.core.dataaccesses.inmemory;
 
 namespace de.playground.aspnet.core.webapi
 {
@@ -60,6 +62,8 @@ namespace de.playground.aspnet.core.webapi
 
             services.AddTransient(typeof(ICustomerModule), typeof(CustomerModule));
             services.AddTransient(typeof(IProductModule), typeof(ProductModule));
+            services.AddTransient(typeof(ICustomerDataAccess), typeof(CustomerInMemoryDataAccess));
+            services.AddTransient(typeof(IProductDataAccess), typeof(ProductInMemoryDataAccess));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

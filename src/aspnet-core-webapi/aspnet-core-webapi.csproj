@@ -30,7 +30,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Contracts\dataaccesses\de.playground.aspnet.core.contracts.dataaccesses\de.playground.aspnet.core.contracts.dataaccesses.csproj" />
     <ProjectReference Include="..\Contracts\modules\de.playground.aspnet.core.contracts.modules\de.playground.aspnet.core.contracts.modules.csproj" />
+    <ProjectReference Include="..\DataAccesses\de.playground.aspnet.core.dataaccesses.inmemory\de.playground.aspnet.core.dataaccesses.inmemory.csproj" />
     <ProjectReference Include="..\Modules\de.playground.aspnet.core.modules\de.playground.aspnet.core.modules.csproj" />
     <ProjectReference Include="..\Servers\de.playground.aspnet.core.servers.middlewares\de.playground.aspnet.core.servers.middlewares.csproj" />
     <ProjectReference Include="..\Utils\de.playground.aspnet.core.utils.swagger\de.playground.aspnet.core.utils.swagger.csproj" />

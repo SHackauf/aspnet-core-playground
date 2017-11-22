@@ -4,10 +4,14 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 
+using AutoMapper;
+
+using de.playground.aspnet.core.contracts.dataaccesses;
 using de.playground.aspnet.core.contracts.dtos;
 using de.playground.aspnet.core.contracts.modules;
 using de.playground.aspnet.core.contracts.utils.logger;
 using de.playground.aspnet.core.dtos;
+using de.playground.aspnet.core.pocos;
 
 using Microsoft.Extensions.Logging;
 
@@ -17,49 +21,50 @@ namespace de.playground.aspnet.core.modules
     {
         #region Private Fields
 
+        private readonly ICustomerDataAccess customerDataAccess;
+
+        private readonly IMapper mapper;
         private readonly ILogger logger;
-
-        private static IList<ICustomerDto> storage = new List<ICustomerDto>
-            {
-                new CustomerDto() { Id = 1, Name = "Customer1" },
-                new CustomerDto() { Id = 2, Name = "Customer2" },
-                new CustomerDto() { Id = 3, Name = "Customer3" }
-            };
-
-        private static int nextFreeId = 4;
 
         #endregion
 
         #region Constructor
 
-        public CustomerModule(ILogger<CustomerModule> logger) => this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        public CustomerModule(ILogger<CustomerModule> logger, IMapper mapper, ICustomerDataAccess customerDataAccess)
+        {
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            this.customerDataAccess = customerDataAccess ?? throw new ArgumentNullException(nameof(customerDataAccess));
+        }
 
         #endregion
 
         #region Public Methods
 
-        public Task<IImmutableList<ICustomerDto>> GetCustomersAsync()
+        public async Task<IImmutableList<ICustomerDto>> GetCustomersAsync()
         {
-            var customerDtos = storage.ToImmutableList();
+            var customerPocos = await this.customerDataAccess.SelectCustomersAsync();
+            var customerDtos = this.mapper.Map<IEnumerable<CustomerDto>>(customerPocos);
             this.logger.LogDebug(LoggingEvents.GetItems, $"{nameof(this.GetCustomersAsync)}: [count: {customerDtos.Count()}]");
 
-            return Task.FromResult<IImmutableList<ICustomerDto>>(customerDtos);
+            return customerDtos.ToImmutableList<ICustomerDto>();
         }
 
-        public Task<ICustomerDto> GetCustomerAsync(int id)
+        public async Task<ICustomerDto> GetCustomerAsync(int id)
         {
-            var customerDto = storage.FirstOrDefault(customer => customer.Id == id);
+            var customerPoco = await this.customerDataAccess.SelectCustomerAsync(id);
+            var customerDto = this.mapper.Map<CustomerDto>(customerPoco);
             this.logger.LogDebug(LoggingEvents.GetItem, $"{nameof(this.GetCustomerAsync)}: [id: {id}][found: {customerDto != null}]");
 
-            return Task.FromResult(customerDto);
+            return customerDto;
         }
 
-        public Task<bool> HasCustomerAsync(int id)
+        public async Task<bool> HasCustomerAsync(int id)
         {
-            var found = storage.Any(customer => customer.Id == id);
+            var found = await this.customerDataAccess.ExistsCustomerAsync(id);
             this.logger.LogDebug(LoggingEvents.HasItem, $"{nameof(this.HasCustomerAsync)}: [id: {id}][found: {found}]");
 
-            return Task.FromResult(found);
+            return found;
         }
 
         public Task<ICustomerDto> CreateCustomerAsync()
@@ -70,58 +75,67 @@ namespace de.playground.aspnet.core.modules
             return Task.FromResult<ICustomerDto>(customer);
         }
 
-        public Task<ICustomerDto> AddCustomerAsync(ICustomerDto customer)
+        public async Task<ICustomerDto> AddCustomerAsync(ICustomerDto customerDto)
         {
-            if (customer == null)
-            {
-                throw new ArgumentNullException(nameof(customer));
-            }
-
-            if (customer.Id > 0)
-            {
-                throw new ArgumentException("Customer has already an id.", nameof(customer));
-            }
-
-            customer.Id = nextFreeId++;
-            storage.Add(customer);
-            this.logger.LogInformation(LoggingEvents.InsertItem, $"{nameof(this.AddCustomerAsync)}: successful [Id: {customer.Id}]");
-
-            return Task.FromResult(customer);
-        }
-
-        public Task<ICustomerDto> ModifyCustomerAsync(ICustomerDto customer)
-        {
-            if (customer == null)
-            {
-                throw new ArgumentNullException(nameof(customer));
-            }
-
-            var customerDto = storage.FirstOrDefault(internalCustomer => internalCustomer.Id == customer.Id);
             if (customerDto == null)
             {
-                return Task.FromResult<ICustomerDto>(null);
+                throw new ArgumentNullException(nameof(customerDto));
             }
 
-            storage.Remove(customerDto);
-            storage.Add(customer);
-            this.logger.LogInformation(LoggingEvents.UpdateItem, $"{nameof(this.ModifyCustomerAsync)}: successful [Id: {customer.Id}]");
+            if (customerDto.Id > 0)
+            {
+                throw new ArgumentException("Customer has already an id.", nameof(customerDto));
+            }
 
-            return Task.FromResult(customer);
+            var customerPoco = this.mapper.Map<CustomerPoco>(customerDto);
+            var savedCustomerPoco = await this.customerDataAccess.InsertCustomerAsync(customerPoco);
+            this.logger.LogInformation(LoggingEvents.InsertItem, $"{nameof(this.AddCustomerAsync)}: successful [Id: {savedCustomerPoco.Id}]");
+
+            var savedCustomerDto = this.mapper.Map<CustomerDto>(savedCustomerPoco);
+            return savedCustomerDto;
         }
 
-        public Task<bool> DeleteCustomerAsync(ICustomerDto customer)
+        public async Task<ICustomerDto> ModifyCustomerAsync(ICustomerDto customerDto)
         {
-            var customerDto = storage.FirstOrDefault(internalCustomer => internalCustomer.Id == customer.Id);
             if (customerDto == null)
             {
-                return Task.FromResult(false);
+                throw new ArgumentNullException(nameof(customerDto));
+            }
+
+            var customerPoco = this.mapper.Map<CustomerPoco>(customerDto);
+            if (!await this.customerDataAccess.ExistsCustomerAsync(customerPoco.Id))
+            {
+                throw new ArgumentException("Customer doesn't exist.", nameof(customerDto));
+            }
+
+            var savedCustomerPoco = await this.customerDataAccess.UpdateCustomerAsync(customerPoco);
+            this.logger.LogInformation(LoggingEvents.UpdateItem, $"{nameof(this.ModifyCustomerAsync)}: successful [Id: {savedCustomerPoco.Id}]");
+
+            var savedCustomerDto = this.mapper.Map<CustomerDto>(savedCustomerPoco);
+            return savedCustomerDto;
+        }
+
+        public async Task<bool> DeleteCustomerAsync(ICustomerDto customerDto)
+        {
+            if (customerDto == null)
+            {
+                throw new ArgumentNullException(nameof(customerDto));
+            }
+
+            var customerPoco = this.mapper.Map<CustomerPoco>(customerDto);
+            if (!await this.customerDataAccess.ExistsCustomerAsync(customerPoco.Id))
+            {
+                return false;
             }
 
             // TODO: Remove products
-            storage.Remove(customerDto);
-            this.logger.LogInformation(LoggingEvents.DeleteItem, $"{nameof(this.DeleteCustomerAsync)}: successful [Id: {customer.Id}]");
+            var successful = await this.customerDataAccess.RemoveCustomerAsync(customerPoco.Id);
+            if (successful)
+            {
+                this.logger.LogInformation(LoggingEvents.DeleteItem, $"{nameof(this.DeleteCustomerAsync)}: successful [Id: {customerPoco.Id}]");
+            }
 
-            return Task.FromResult(true);
+            return successful;
         }
 
         #endregion

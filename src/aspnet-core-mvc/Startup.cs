@@ -4,7 +4,9 @@ using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using de.playground.aspnet.core.contracts.dataaccesses;
 using de.playground.aspnet.core.contracts.modules;
+using de.playground.aspnet.core.dataaccesses.inmemory;
 using de.playground.aspnet.core.modules;
 using de.playground.aspnet.core.servers.middlewares.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
@@ -55,6 +57,8 @@ namespace de.playground.aspnet.core.mvc
 
             services.AddTransient(typeof(ICustomerModule), typeof(CustomerModule));
             services.AddTransient(typeof(IProductModule), typeof(ProductModule));
+            services.AddTransient(typeof(ICustomerDataAccess), typeof(CustomerInMemoryDataAccess));
+            services.AddTransient(typeof(IProductDataAccess), typeof(ProductInMemoryDataAccess));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

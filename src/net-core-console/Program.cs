@@ -1,5 +1,7 @@
 ﻿using System;
+using de.playground.aspnet.core.contracts.dataaccesses;
 using de.playground.aspnet.core.contracts.modules;
+using de.playground.aspnet.core.dataaccesses.inmemory;
 using de.playground.aspnet.core.modules;
 
 using Microsoft.Extensions.DependencyInjection;
@@ -30,6 +32,8 @@ namespace de.playground.net.core.console
 
             serviceCollection.AddTransient<ICustomerModule, CustomerModule>();
             serviceCollection.AddTransient<IProductModule, ProductModule>();
+            serviceCollection.AddTransient<ICustomerDataAccess, CustomerInMemoryDataAccess>();
+            serviceCollection.AddTransient<IProductDataAccess, ProductInMemoryDataAccess>();
             serviceCollection.AddTransient<MainDialog>();
             serviceCollection.AddTransient<CustomerDialog>();
         }
