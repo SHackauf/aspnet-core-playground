@@ -41,10 +41,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataAccesses", "DataAccesse
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "de.playground.aspnet.core.dataaccesses.inmemory", "DataAccesses\de.playground.aspnet.core.dataaccesses.inmemory\de.playground.aspnet.core.dataaccesses.inmemory.csproj", "{04EE592C-FDB7-4B00-8A72-64D54505A56F}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Pocos", "Pocos", "{D83BB788-4822-4772-A801-AAC390422CC8}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "de.playground.aspnet.core.pocos", "Pocos\de.playground.aspnet.core.pocos\de.playground.aspnet.core.pocos.csproj", "{73B4599B-D325-4AA8-A1E1-A30FE2E78290}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "de.playground.aspnet.core.dataaccesses.mariadb", "DataAccesses\de.playground.aspnet.core.dataaccesses.mariadb\de.playground.aspnet.core.dataaccesses.mariadb.csproj", "{980EBCB8-A89E-44A8-8B23-8F960CD81311}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "de.playground.aspnet.core.utils.entityframework", "Utils\de.playground.aspnet.core.utils.entityframework\de.playground.aspnet.core.utils.entityframework.csproj", "{952C4B24-3306-451D-A07B-956E5FE4D7FF}"
@@ -107,10 +103,6 @@ Global
 		{04EE592C-FDB7-4B00-8A72-64D54505A56F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04EE592C-FDB7-4B00-8A72-64D54505A56F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04EE592C-FDB7-4B00-8A72-64D54505A56F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{73B4599B-D325-4AA8-A1E1-A30FE2E78290}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{73B4599B-D325-4AA8-A1E1-A30FE2E78290}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{73B4599B-D325-4AA8-A1E1-A30FE2E78290}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{73B4599B-D325-4AA8-A1E1-A30FE2E78290}.Release|Any CPU.Build.0 = Release|Any CPU
 		{980EBCB8-A89E-44A8-8B23-8F960CD81311}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{980EBCB8-A89E-44A8-8B23-8F960CD81311}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{980EBCB8-A89E-44A8-8B23-8F960CD81311}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -134,7 +126,6 @@ Global
 		{1B0BDE90-739B-4466-9AD0-D63032A4B613} = {510548C6-6568-4196-BAFF-D6EFF746C94B}
 		{9A336EE2-4B94-4B04-B673-30A739BA11D9} = {510548C6-6568-4196-BAFF-D6EFF746C94B}
 		{04EE592C-FDB7-4B00-8A72-64D54505A56F} = {D8F004C9-1291-4468-B157-22A2F22EBC97}
-		{73B4599B-D325-4AA8-A1E1-A30FE2E78290} = {D83BB788-4822-4772-A801-AAC390422CC8}
 		{980EBCB8-A89E-44A8-8B23-8F960CD81311} = {D8F004C9-1291-4468-B157-22A2F22EBC97}
 		{952C4B24-3306-451D-A07B-956E5FE4D7FF} = {14CF8397-805C-4A5E-8C41-6B5B015B7ACB}
 	EndGlobalSection

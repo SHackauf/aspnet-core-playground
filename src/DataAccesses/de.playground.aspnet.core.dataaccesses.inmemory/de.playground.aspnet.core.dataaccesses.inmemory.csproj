@@ -18,7 +18,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Contracts\dataaccesses\de.playground.aspnet.core.contracts.dataaccesses\de.playground.aspnet.core.contracts.dataaccesses.csproj" />
     <ProjectReference Include="..\..\Contracts\utils\de.playground.aspnet.core.contracts.utils.logger\de.playground.aspnet.core.contracts.utils.logger.csproj" />
-    <ProjectReference Include="..\..\Pocos\de.playground.aspnet.core.pocos\de.playground.aspnet.core.pocos.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 
+using de.playground.aspnet.core.contracts.pocos;
 using de.playground.aspnet.core.dtos;
-using de.playground.aspnet.core.pocos;
 
 namespace de.playground.aspnet.core.modules.Profiles
 {

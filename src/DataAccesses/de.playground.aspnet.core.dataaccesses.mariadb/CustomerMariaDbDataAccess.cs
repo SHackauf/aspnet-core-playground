@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 
 using de.playground.aspnet.core.contracts.dataaccesses;
 using de.playground.aspnet.core.contracts.pocos;
-using de.playground.aspnet.core.pocos;
 using de.playground.aspnet.core.utils.entityframework;
 
 using Microsoft.EntityFrameworkCore;
@@ -13,7 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace de.playground.aspnet.core.dataaccesses.mariadb
 {
-    public class CustomerMariaDbDataAccess : EntityDataAccessBase<ICustomerPoco, CustomerPoco, MariaDbContext>, ICustomerDataAccess
+    public class CustomerMariaDbDataAccess : EntityDataAccessBase<CustomerPoco, MariaDbContext>, ICustomerDataAccess
     {
         #region Constructor
 
@@ -26,22 +25,22 @@ namespace de.playground.aspnet.core.dataaccesses.mariadb
 
         #region Public Methods
 
-        public async Task<IEnumerable<ICustomerPoco>> SelectCustomersAsync()
+        public async Task<IEnumerable<CustomerPoco>> SelectCustomersAsync()
             => await this.SelectPocosAsync();
 
-        public async Task<IEnumerable<ICustomerPoco>> SelectCustomersAsync(Expression<Func<ICustomerPoco, bool>> whereExpression)
+        public async Task<IEnumerable<CustomerPoco>> SelectCustomersAsync(Expression<Func<CustomerPoco, bool>> whereExpression)
             => await this.SelectPocosAsync(whereExpression);
 
-        public async Task<ICustomerPoco> SelectCustomerAsync(int id)
+        public async Task<CustomerPoco> SelectCustomerAsync(int id)
             => await this.SelectPocoAsync(customer => customer.Id == id);
 
         public async Task<bool> ExistsCustomerAsync(int id)
             => await this.ExistsPocoAsync(customer => customer.Id == id);
 
-        public async Task<ICustomerPoco> InsertCustomerAsync(ICustomerPoco customer)
+        public async Task<CustomerPoco> InsertCustomerAsync(CustomerPoco customer)
             => await this.InsertPocoAsync(customer);
 
-        public async Task<ICustomerPoco> UpdateCustomerAsync(ICustomerPoco customer)
+        public async Task<CustomerPoco> UpdateCustomerAsync(CustomerPoco customer)
             => await this.UpdatePocoAsync(customer);
 
         public async Task<bool> RemoveCustomerAsync(int id)
@@ -53,7 +52,7 @@ namespace de.playground.aspnet.core.dataaccesses.mariadb
 
         protected override DbSet<CustomerPoco> GetDbSet(MariaDbContext dbContext) => dbContext.Customers;
 
-        protected override string GetPrimaryKeyAsString(ICustomerPoco poco) => poco.Id.ToString();
+        protected override string GetPrimaryKeyAsString(CustomerPoco poco) => poco.Id.ToString();
 
         #endregion
     }

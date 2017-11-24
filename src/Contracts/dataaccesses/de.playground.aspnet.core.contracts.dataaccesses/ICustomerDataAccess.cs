@@ -9,17 +9,17 @@ namespace de.playground.aspnet.core.contracts.dataaccesses
 {
     public interface ICustomerDataAccess : IDataAccess
     {
-        Task<IEnumerable<ICustomerPoco>> SelectCustomersAsync();
+        Task<IEnumerable<CustomerPoco>> SelectCustomersAsync();
 
-        Task<IEnumerable<ICustomerPoco>> SelectCustomersAsync(Expression<Func<ICustomerPoco, bool>> whereExpression);
+        Task<IEnumerable<CustomerPoco>> SelectCustomersAsync(Expression<Func<CustomerPoco, bool>> whereExpression);
 
-        Task<ICustomerPoco> SelectCustomerAsync(int id);
+        Task<CustomerPoco> SelectCustomerAsync(int id);
 
         Task<bool> ExistsCustomerAsync(int id);
 
-        Task<ICustomerPoco> InsertCustomerAsync(ICustomerPoco customer);
+        Task<CustomerPoco> InsertCustomerAsync(CustomerPoco customer);
 
-        Task<ICustomerPoco> UpdateCustomerAsync(ICustomerPoco customer);
+        Task<CustomerPoco> UpdateCustomerAsync(CustomerPoco customer);
 
         Task<bool> RemoveCustomerAsync(int id);
     }

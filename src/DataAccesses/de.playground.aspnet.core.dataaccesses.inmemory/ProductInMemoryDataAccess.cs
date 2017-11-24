@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using de.playground.aspnet.core.contracts.dataaccesses;
 using de.playground.aspnet.core.contracts.pocos;
 using de.playground.aspnet.core.contracts.utils.logger;
-using de.playground.aspnet.core.pocos;
 
 using Microsoft.Extensions.Logging;
 
@@ -19,7 +18,7 @@ namespace de.playground.aspnet.core.dataaccesses.inmemory
 
         private readonly ILogger logger;
 
-        private static IList<IProductPoco> storage = new List<IProductPoco>
+        private static IList<ProductPoco> storage = new List<ProductPoco>
             {
                 new ProductPoco() { Id = 1, CustomerId = 1, Name = "Product1" },
                 new ProductPoco() { Id = 2, CustomerId = 1, Name = "Product2" },
@@ -41,15 +40,15 @@ namespace de.playground.aspnet.core.dataaccesses.inmemory
 
         #region Public Methods
 
-        public Task<IEnumerable<IProductPoco>> SelectProductsAsync(int customerId)
+        public Task<IEnumerable<ProductPoco>> SelectProductsAsync(int customerId)
         {
             var productPocos = storage.Where(product => product.CustomerId == customerId);
             this.logger.LogDebug(LoggingEvents.GetItems, $"{nameof(this.SelectProductsAsync)}: [count: {productPocos.Count()}]");
 
-            return Task.FromResult<IEnumerable<IProductPoco>>(productPocos);
+            return Task.FromResult<IEnumerable<ProductPoco>>(productPocos);
         }
 
-        public Task<IProductPoco> SelectProductAsync(int customerId, int id)
+        public Task<ProductPoco> SelectProductAsync(int customerId, int id)
         {
             var productPocos = storage.FirstOrDefault(product => product.CustomerId == customerId && product.Id == id);
             this.logger.LogDebug(LoggingEvents.GetItem, $"{nameof(this.SelectProductAsync)}: [id: {id}][found: {productPocos != null}]");
@@ -65,7 +64,7 @@ namespace de.playground.aspnet.core.dataaccesses.inmemory
             return Task.FromResult(found);
         }
 
-        public Task<IProductPoco> InsertProductAsync(IProductPoco productPoco)
+        public Task<ProductPoco> InsertProductAsync(ProductPoco productPoco)
         {
             if (productPoco == null)
             {
@@ -86,7 +85,7 @@ namespace de.playground.aspnet.core.dataaccesses.inmemory
             return Task.FromResult(productPoco);
         }
 
-        public Task<IProductPoco> UpdateProductAsync(IProductPoco productPoco)
+        public Task<ProductPoco> UpdateProductAsync(ProductPoco productPoco)
         {
             if (productPoco == null)
             {
@@ -96,7 +95,7 @@ namespace de.playground.aspnet.core.dataaccesses.inmemory
             var foundProductPoco = storage.FirstOrDefault(internalProduct => internalProduct.Id == productPoco.Id);
             if (foundProductPoco == null)
             {
-                return Task.FromResult<IProductPoco>(null);
+                return Task.FromResult<ProductPoco>(null);
             }
 
             storage.Remove(foundProductPoco);

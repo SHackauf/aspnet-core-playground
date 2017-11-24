@@ -18,7 +18,6 @@
     <ProjectReference Include="..\..\Contracts\dataaccesses\de.playground.aspnet.core.contracts.dataaccesses\de.playground.aspnet.core.contracts.dataaccesses.csproj" />
     <ProjectReference Include="..\..\Contracts\pocos\de.playground.aspnet.core.contracts.pocos\de.playground.aspnet.core.contracts.pocos.csproj" />
     <ProjectReference Include="..\..\Contracts\utils\de.playground.aspnet.core.contracts.utils.logger\de.playground.aspnet.core.contracts.utils.logger.csproj" />
-    <ProjectReference Include="..\..\Pocos\de.playground.aspnet.core.pocos\de.playground.aspnet.core.pocos.csproj" />
     <ProjectReference Include="..\..\Utils\de.playground.aspnet.core.utils.entityframework\de.playground.aspnet.core.utils.entityframework.csproj" />
   </ItemGroup>
 

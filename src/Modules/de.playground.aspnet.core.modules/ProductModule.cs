@@ -9,9 +9,10 @@ using AutoMapper;
 using de.playground.aspnet.core.contracts.dataaccesses;
 using de.playground.aspnet.core.contracts.dtos;
 using de.playground.aspnet.core.contracts.modules;
+using de.playground.aspnet.core.contracts.pocos;
 using de.playground.aspnet.core.contracts.utils.logger;
 using de.playground.aspnet.core.dtos;
-using de.playground.aspnet.core.pocos;
+
 using Microsoft.Extensions.Logging;
 
 namespace de.playground.aspnet.core.modules

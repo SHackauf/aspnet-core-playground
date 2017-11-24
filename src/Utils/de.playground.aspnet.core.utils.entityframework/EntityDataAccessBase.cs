@@ -11,9 +11,8 @@ using Microsoft.Extensions.Logging;
 
 namespace de.playground.aspnet.core.utils.entityframework
 {
-    public abstract class EntityDataAccessBase<TPocoInterface, TPocoClass, TDbContext>
-        where TPocoInterface : IPoco
-        where TPocoClass : class, TPocoInterface
+    public abstract class EntityDataAccessBase<TPoco, TDbContext>
+        where TPoco : class, IPoco
         where TDbContext : DbContext
     {
         #region Private Fields
@@ -26,7 +25,7 @@ namespace de.playground.aspnet.core.utils.entityframework
 
         #region Constructor
 
-        public EntityDataAccessBase(ILogger<EntityDataAccessBase<TPocoInterface, TPocoClass, TDbContext>> logger, TDbContext dbContext)
+        public EntityDataAccessBase(ILogger<EntityDataAccessBase<TPoco, TDbContext>> logger, TDbContext dbContext)
         {
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
             this.dbContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
@@ -36,14 +35,14 @@ namespace de.playground.aspnet.core.utils.entityframework
 
         #region Protected Abstract Methods
 
-        protected abstract DbSet<TPocoClass> GetDbSet(TDbContext dbContext);
-        protected abstract string GetPrimaryKeyAsString(TPocoInterface poco);
+        protected abstract DbSet<TPoco> GetDbSet(TDbContext dbContext);
+        protected abstract string GetPrimaryKeyAsString(TPoco poco);
 
         #endregion
 
         #region Protected Methods
 
-        protected async Task<IEnumerable<TPocoInterface>> SelectPocosAsync()
+        protected async Task<IEnumerable<TPoco>> SelectPocosAsync()
         {
             try
             {
@@ -56,7 +55,7 @@ namespace de.playground.aspnet.core.utils.entityframework
             }
         }
 
-        public async Task<IEnumerable<TPocoInterface>> SelectPocosAsync(Expression<Func<TPocoInterface, bool>> whereExpression)
+        public async Task<IEnumerable<TPoco>> SelectPocosAsync(Expression<Func<TPoco, bool>> whereExpression)
         {
             try
             {
@@ -69,7 +68,7 @@ namespace de.playground.aspnet.core.utils.entityframework
             }
         }
 
-        public async Task<TPocoInterface> SelectPocoAsync(Expression<Func<TPocoInterface, bool>> whereExpression)
+        public async Task<TPoco> SelectPocoAsync(Expression<Func<TPoco, bool>> whereExpression)
         {
             try
             {
@@ -82,7 +81,7 @@ namespace de.playground.aspnet.core.utils.entityframework
             }
         }
 
-        public async Task<bool> ExistsPocoAsync(Expression<Func<TPocoInterface, bool>> whereExpression)
+        public async Task<bool> ExistsPocoAsync(Expression<Func<TPoco, bool>> whereExpression)
         {
             try
             {
@@ -96,11 +95,11 @@ namespace de.playground.aspnet.core.utils.entityframework
             }
         }
 
-        public async Task<TPocoInterface> InsertPocoAsync(TPocoInterface poco)
+        public async Task<TPoco> InsertPocoAsync(TPoco poco)
         {
             try
             {
-                this.dbContext.Add(poco as TPocoClass);
+                this.dbContext.Add(poco);
                 var count = await this.dbContext.SaveChangesAsync();
 
                 if (count == 1)
@@ -110,7 +109,7 @@ namespace de.playground.aspnet.core.utils.entityframework
                 }
 
                 this.logger.LogWarning(LoggingEvents.InsertItem, $"{nameof(this.InsertPocoAsync)}: faulty [Id: {this.GetPrimaryKeyAsString(poco)}]");
-                return default(TPocoInterface);
+                return default(TPoco);
             }
             catch (DbUpdateException dbUpdateException)
             {
@@ -119,11 +118,11 @@ namespace de.playground.aspnet.core.utils.entityframework
             }
         }
 
-        public async Task<TPocoInterface> UpdatePocoAsync(TPocoInterface poco)
+        public async Task<TPoco> UpdatePocoAsync(TPoco poco)
         {
             try
             {
-                this.dbContext.Update(poco as TPocoClass);
+                this.dbContext.Update(poco);
                 var count = await this.dbContext.SaveChangesAsync();
 
                 if (count == 1)
@@ -133,7 +132,7 @@ namespace de.playground.aspnet.core.utils.entityframework
                 }
 
                 this.logger.LogWarning(LoggingEvents.UpdateItem, $"{nameof(this.UpdatePocoAsync)}: faulty [Id: {this.GetPrimaryKeyAsString(poco)}]");
-                return default(TPocoInterface);
+                return default(TPoco);
             }
             catch (DbUpdateException dbUpdateException)
             {
@@ -142,11 +141,11 @@ namespace de.playground.aspnet.core.utils.entityframework
             }
         }
 
-        public async Task<bool> RemovePocoAsync(Expression<Func<TPocoInterface, bool>> whereExpression)
+        public async Task<bool> RemovePocoAsync(Expression<Func<TPoco, bool>> whereExpression)
         {
             try
             {
-                var poco = await this.SelectPocoAsync(whereExpression) as TPocoClass;
+                var poco = await this.SelectPocoAsync(whereExpression);
                 if (poco == null)
                 {
                     return false;

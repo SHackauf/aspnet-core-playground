@@ -7,15 +7,15 @@ namespace de.playground.aspnet.core.contracts.dataaccesses
 {
     public interface IProductDataAccess : IDataAccess
     {
-        Task<IEnumerable<IProductPoco>> SelectProductsAsync(int customerId);
+        Task<IEnumerable<ProductPoco>> SelectProductsAsync(int customerId);
 
-        Task<IProductPoco> SelectProductAsync(int customerId, int id);
+        Task<ProductPoco> SelectProductAsync(int customerId, int id);
 
         Task<bool> ExistsProductAsync(int customerId, int id);
 
-        Task<IProductPoco> InsertProductAsync(IProductPoco product);
+        Task<ProductPoco> InsertProductAsync(ProductPoco product);
 
-        Task<IProductPoco> UpdateProductAsync(IProductPoco product);
+        Task<ProductPoco> UpdateProductAsync(ProductPoco product);
 
         Task<bool> RemoveProductAsync(int id);
     }

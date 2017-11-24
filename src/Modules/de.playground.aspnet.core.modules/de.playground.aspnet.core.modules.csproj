@@ -20,7 +20,6 @@
     <ProjectReference Include="..\..\Contracts\modules\de.playground.aspnet.core.contracts.modules\de.playground.aspnet.core.contracts.modules.csproj" />
     <ProjectReference Include="..\..\Contracts\utils\de.playground.aspnet.core.contracts.utils.logger\de.playground.aspnet.core.contracts.utils.logger.csproj" />
     <ProjectReference Include="..\..\Dtos\de.playground.aspnet.core.dtos\de.playground.aspnet.core.dtos.csproj" />
-    <ProjectReference Include="..\..\Pocos\de.playground.aspnet.core.pocos\de.playground.aspnet.core.pocos.csproj" />
   </ItemGroup>
 
 </Project>

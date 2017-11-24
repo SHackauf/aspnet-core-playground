@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using de.playground.aspnet.core.contracts.dataaccesses;
 using de.playground.aspnet.core.contracts.pocos;
 using de.playground.aspnet.core.contracts.utils.logger;
-using de.playground.aspnet.core.pocos;
 
 using Microsoft.Extensions.Logging;
 
@@ -20,7 +19,7 @@ namespace de.playground.aspnet.core.dataaccesses.inmemory
 
         private readonly ILogger logger;
 
-        private static IList<ICustomerPoco> storage = new List<ICustomerPoco>
+        private static IList<CustomerPoco> storage = new List<CustomerPoco>
             {
                 new CustomerPoco() { Id = 1, Name = "Customer1" },
                 new CustomerPoco() { Id = 2, Name = "Customer2" },
@@ -39,23 +38,23 @@ namespace de.playground.aspnet.core.dataaccesses.inmemory
 
         #region Public Methods
 
-        public Task<IEnumerable<ICustomerPoco>> SelectCustomersAsync()
+        public Task<IEnumerable<CustomerPoco>> SelectCustomersAsync()
         {
             var customerPocos = storage.ToArray();
             this.logger.LogDebug(LoggingEvents.GetItems, $"{nameof(this.SelectCustomersAsync)}: [count: {customerPocos.Count()}]");
 
-            return Task.FromResult<IEnumerable<ICustomerPoco>>(customerPocos);
+            return Task.FromResult<IEnumerable<CustomerPoco>>(customerPocos);
         }
 
-        public Task<IEnumerable<ICustomerPoco>> SelectCustomersAsync(Expression<Func<ICustomerPoco, bool>> whereExpression)
+        public Task<IEnumerable<CustomerPoco>> SelectCustomersAsync(Expression<Func<CustomerPoco, bool>> whereExpression)
         {
             var customerPocos = storage.Where(whereExpression.Compile()).ToArray();
             this.logger.LogDebug(LoggingEvents.GetItems, $"{nameof(this.SelectCustomersAsync)}: [count: {customerPocos.Count()}]");
 
-            return Task.FromResult<IEnumerable<ICustomerPoco>>(customerPocos);
+            return Task.FromResult<IEnumerable<CustomerPoco>>(customerPocos);
         }
 
-        public Task<ICustomerPoco> SelectCustomerAsync(int id)
+        public Task<CustomerPoco> SelectCustomerAsync(int id)
         {
             var customerPoco = storage.FirstOrDefault(customer => customer.Id == id);
             this.logger.LogDebug(LoggingEvents.GetItem, $"{nameof(this.SelectCustomerAsync)}: [id: {id}][found: {customerPoco != null}]");
@@ -71,7 +70,7 @@ namespace de.playground.aspnet.core.dataaccesses.inmemory
             return Task.FromResult(found);
         }
 
-        public Task<ICustomerPoco> InsertCustomerAsync(ICustomerPoco customerPoco)
+        public Task<CustomerPoco> InsertCustomerAsync(CustomerPoco customerPoco)
         {
             if (customerPoco == null)
             {
@@ -90,7 +89,7 @@ namespace de.playground.aspnet.core.dataaccesses.inmemory
             return Task.FromResult(customerPoco);
         }
 
-        public Task<ICustomerPoco> UpdateCustomerAsync(ICustomerPoco customerPoco)
+        public Task<CustomerPoco> UpdateCustomerAsync(CustomerPoco customerPoco)
         {
             if (customerPoco == null)
             {
@@ -100,7 +99,7 @@ namespace de.playground.aspnet.core.dataaccesses.inmemory
             var foundCustomerPoco = storage.FirstOrDefault(internalCustomer => internalCustomer.Id == customerPoco.Id);
             if (foundCustomerPoco == null)
             {
-                return Task.FromResult<ICustomerPoco>(null);
+                return Task.FromResult<CustomerPoco>(null);
             }
 
             storage.Remove(foundCustomerPoco);

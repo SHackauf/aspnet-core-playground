@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 
 using de.playground.aspnet.core.contracts.dataaccesses;
 using de.playground.aspnet.core.contracts.pocos;
-using de.playground.aspnet.core.pocos;
 using de.playground.aspnet.core.utils.entityframework;
 
 using Microsoft.EntityFrameworkCore;
@@ -11,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace de.playground.aspnet.core.dataaccesses.mariadb
 {
-    public class ProductMariaDbDataAccess : EntityDataAccessBase<IProductPoco, ProductPoco, MariaDbContext>, IProductDataAccess
+    public class ProductMariaDbDataAccess : EntityDataAccessBase<ProductPoco, MariaDbContext>, IProductDataAccess
     {
         #region Constructor
 
@@ -24,19 +23,19 @@ namespace de.playground.aspnet.core.dataaccesses.mariadb
 
         #region Public Methods
 
-        public Task<IEnumerable<IProductPoco>> SelectProductsAsync(int customerId)
+        public Task<IEnumerable<ProductPoco>> SelectProductsAsync(int customerId)
             => this.SelectPocosAsync(product => product.CustomerId == customerId);
 
-        public Task<IProductPoco> SelectProductAsync(int customerId, int id)
+        public Task<ProductPoco> SelectProductAsync(int customerId, int id)
             => this.SelectPocoAsync(product => product.CustomerId == customerId && product.Id == id);
 
         public Task<bool> ExistsProductAsync(int customerId, int id)
             => this.ExistsPocoAsync(product => product.CustomerId == customerId && product.Id == id);
 
-        public Task<IProductPoco> InsertProductAsync(IProductPoco product)
+        public Task<ProductPoco> InsertProductAsync(ProductPoco product)
             => this.InsertPocoAsync(product);
 
-        public Task<IProductPoco> UpdateProductAsync(IProductPoco product)
+        public Task<ProductPoco> UpdateProductAsync(ProductPoco product)
             => this.UpdatePocoAsync(product);
 
         public Task<bool> RemoveProductAsync(int id)
@@ -48,7 +47,7 @@ namespace de.playground.aspnet.core.dataaccesses.mariadb
 
         protected override DbSet<ProductPoco> GetDbSet(MariaDbContext dbContext) => dbContext.Products;
 
-        protected override string GetPrimaryKeyAsString(IProductPoco poco) => poco.Id.ToString();
+        protected override string GetPrimaryKeyAsString(ProductPoco poco) => poco.Id.ToString();
 
         #endregion
     }
