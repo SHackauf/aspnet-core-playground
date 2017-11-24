@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace de.playground.aspnet.core.dataaccesses.inmemory
 {
+    // TODO: change to https://docs.microsoft.com/en-us/ef/core/providers/in-memory/
     public class ProductInMemoryDataAccess : IProductDataAccess
     {
         #region Private Fields

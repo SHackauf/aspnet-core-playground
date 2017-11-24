@@ -28,6 +28,8 @@
 /src/Contracts/utils/de.playground.aspnet.core.contracts.utils.logger/bin
 /src/DataAccesses/de.playground.aspnet.core.dataaccesses.inmemory/bin/
 /src/DataAccesses/de.playground.aspnet.core.dataaccesses.inmemory/obj/
+/src/DataAccesses/de.playground.aspnet.core.dataaccesses.mariadb/bin/
+/src/DataAccesses/de.playground.aspnet.core.dataaccesses.mariadb/obj/
 /src/Dtos/de.playground.aspnet.core.dtos/bin/
 /src/Dtos/de.playground.aspnet.core.dtos/obj/
 /src/Modules/de.playground.aspnet.core.modules/bin/
