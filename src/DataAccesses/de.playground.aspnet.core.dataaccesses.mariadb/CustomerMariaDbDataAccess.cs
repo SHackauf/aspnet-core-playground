@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 using de.playground.aspnet.core.contracts.dataaccesses;
@@ -38,6 +40,19 @@ namespace de.playground.aspnet.core.dataaccesses.mariadb
             try
             {
                 return await this.mariaDbContext.Customers.AsNoTracking().ToArrayAsync();
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError(exception, "Can't select customers.");
+                throw exception;
+            }
+        }
+
+        public async Task<IEnumerable<ICustomerPoco>> SelectCustomersAsync(Expression<Func<ICustomerPoco, bool>> whereExpression)
+        {
+            try
+            {
+                return await this.mariaDbContext.Customers.AsNoTracking().Where(whereExpression).ToArrayAsync();
             }
             catch (Exception exception)
             {

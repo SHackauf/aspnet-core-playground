@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 using de.playground.aspnet.core.contracts.dataaccesses;
@@ -42,6 +42,14 @@ namespace de.playground.aspnet.core.dataaccesses.inmemory
         public Task<IEnumerable<ICustomerPoco>> SelectCustomersAsync()
         {
             var customerPocos = storage.ToArray();
+            this.logger.LogDebug(LoggingEvents.GetItems, $"{nameof(this.SelectCustomersAsync)}: [count: {customerPocos.Count()}]");
+
+            return Task.FromResult<IEnumerable<ICustomerPoco>>(customerPocos);
+        }
+
+        public Task<IEnumerable<ICustomerPoco>> SelectCustomersAsync(Expression<Func<ICustomerPoco, bool>> whereExpression)
+        {
+            var customerPocos = storage.Where(whereExpression.Compile()).ToArray();
             this.logger.LogDebug(LoggingEvents.GetItems, $"{nameof(this.SelectCustomersAsync)}: [count: {customerPocos.Count()}]");
 
             return Task.FromResult<IEnumerable<ICustomerPoco>>(customerPocos);
