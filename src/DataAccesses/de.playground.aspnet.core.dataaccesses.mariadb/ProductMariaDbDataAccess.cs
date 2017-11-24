@@ -1,42 +1,55 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using de.playground.aspnet.core.contracts.dataaccesses;
 using de.playground.aspnet.core.contracts.pocos;
+using de.playground.aspnet.core.pocos;
+using de.playground.aspnet.core.utils.entityframework;
+
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace de.playground.aspnet.core.dataaccesses.mariadb
 {
-    public class ProductMariaDbDataAccess : IProductDataAccess
+    public class ProductMariaDbDataAccess : EntityDataAccessBase<IProductPoco, ProductPoco, MariaDbContext>, IProductDataAccess
     {
-        public Task<IEnumerable<IProductPoco>> SelectProductsAsync(int customerId)
+        #region Constructor
+
+        public ProductMariaDbDataAccess(ILogger<ProductMariaDbDataAccess> logger, MariaDbContext mariaDbContext)
+            : base(logger, mariaDbContext)
         {
-            throw new NotImplementedException();
         }
+
+        #endregion
+
+        #region Public Methods
+
+        public Task<IEnumerable<IProductPoco>> SelectProductsAsync(int customerId)
+            => this.SelectPocosAsync(product => product.CustomerId == customerId);
 
         public Task<IProductPoco> SelectProductAsync(int customerId, int id)
-        {
-            throw new NotImplementedException();
-        }
+            => this.SelectPocoAsync(product => product.CustomerId == customerId && product.Id == id);
 
         public Task<bool> ExistsProductAsync(int customerId, int id)
-        {
-            throw new NotImplementedException();
-        }
+            => this.ExistsPocoAsync(product => product.CustomerId == customerId && product.Id == id);
 
         public Task<IProductPoco> InsertProductAsync(IProductPoco product)
-        {
-            throw new NotImplementedException();
-        }
+            => this.InsertPocoAsync(product);
 
         public Task<IProductPoco> UpdateProductAsync(IProductPoco product)
-        {
-            throw new NotImplementedException();
-        }
+            => this.UpdatePocoAsync(product);
 
         public Task<bool> RemoveProductAsync(int id)
-        {
-            throw new NotImplementedException();
-        }
+            => this.RemovePocoAsync(product => product.Id == id);
+
+        #endregion
+
+        #region Protected Methods
+
+        protected override DbSet<ProductPoco> GetDbSet(MariaDbContext dbContext) => dbContext.Products;
+
+        protected override string GetPrimaryKeyAsString(IProductPoco poco) => poco.Id.ToString();
+
+        #endregion
     }
 }
