@@ -2,24 +2,23 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
+    <AssemblyName>de.playground.aspnet.core.utils.entityFramework</AssemblyName>
+    <RootNamespace>de.playground.aspnet.core.utils.entityFramework</RootNamespace>
     <Authors>Stefan Hackauf</Authors>
     <Company>Stefan Hackauf</Company>
+    <Product>aspnet-core-playground</Product>
     <PackageProjectUrl>https://github.com/SHackauf/aspnet-core-playground</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SHackauf/aspnet-core-playground</RepositoryUrl>
-    <Product>aspnet-core-playground</Product>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="2.0.1" />
-    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="2.0.1-preview1-final" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Contracts\dataaccesses\de.playground.aspnet.core.contracts.dataaccesses\de.playground.aspnet.core.contracts.dataaccesses.csproj" />
     <ProjectReference Include="..\..\Contracts\pocos\de.playground.aspnet.core.contracts.pocos\de.playground.aspnet.core.contracts.pocos.csproj" />
     <ProjectReference Include="..\..\Contracts\utils\de.playground.aspnet.core.contracts.utils.logger\de.playground.aspnet.core.contracts.utils.logger.csproj" />
-    <ProjectReference Include="..\..\Pocos\de.playground.aspnet.core.pocos\de.playground.aspnet.core.pocos.csproj" />
-    <ProjectReference Include="..\..\Utils\de.playground.aspnet.core.utils.entityframework\de.playground.aspnet.core.utils.entityframework.csproj" />
   </ItemGroup>
 
 </Project>

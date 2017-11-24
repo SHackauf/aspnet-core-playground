@@ -38,5 +38,7 @@
 /src/Pocos/de.playground.aspnet.core.pocos/obj/
 /src/Servers/de.playground.aspnet.core.servers.middlewares/bin/
 /src/Servers/de.playground.aspnet.core.servers.middlewares/obj/
+/src/Utils/de.playground.aspnet.core.utils.entityframework/bin/
+/src/Utils/de.playground.aspnet.core.utils.entityframework/obj/
 /src/Utils/de.playground.aspnet.core.utils.swagger/bin/
 /src/Utils/de.playground.aspnet.core.utils.swagger/obj/

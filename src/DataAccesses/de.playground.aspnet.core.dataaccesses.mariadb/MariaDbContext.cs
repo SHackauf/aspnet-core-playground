@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using de.playground.aspnet.core.contracts.pocos;
-using de.playground.aspnet.core.pocos;
+﻿using de.playground.aspnet.core.pocos;
 
 using Microsoft.EntityFrameworkCore;
 
