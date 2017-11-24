@@ -101,7 +101,7 @@ namespace de.playground.aspnet.core.mvc.Controllers
                     }
 
                     var mappedCustomerDto = this.mapper.Map(customerModel, customerDto);
-                    var savedCustomerDto = this.customerModule.ModifyCustomerAsync(mappedCustomerDto);
+                    var savedCustomerDto = await this.customerModule.ModifyCustomerAsync(mappedCustomerDto);
                     if (savedCustomerDto == null)
                     {
                         return View(savedCustomerDto);
@@ -110,7 +110,7 @@ namespace de.playground.aspnet.core.mvc.Controllers
                 else
                 {
                     var mappedCustomerDto = this.mapper.Map<CustomerDto>(customerModel);
-                    var savedCustomerDto = this.customerModule.AddCustomerAsync(mappedCustomerDto);
+                    var savedCustomerDto = await this.customerModule.AddCustomerAsync(mappedCustomerDto);
                     if (savedCustomerDto == null)
                     {
                         return View(savedCustomerDto);

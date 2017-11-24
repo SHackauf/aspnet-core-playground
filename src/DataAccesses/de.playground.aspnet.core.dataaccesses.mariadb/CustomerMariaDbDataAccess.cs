@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using de.playground.aspnet.core.contracts.dataaccesses;
 using de.playground.aspnet.core.contracts.pocos;
 using de.playground.aspnet.core.contracts.utils.logger;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -36,7 +37,7 @@ namespace de.playground.aspnet.core.dataaccesses.mariadb
         {
             try
             {
-                return await this.mariaDbContext.Customers.ToArrayAsync();
+                return await this.mariaDbContext.Customers.AsNoTracking().ToArrayAsync();
             }
             catch (Exception exception)
             {
@@ -49,7 +50,7 @@ namespace de.playground.aspnet.core.dataaccesses.mariadb
         {
             try
             {
-                return await this.mariaDbContext.Customers.FirstOrDefaultAsync(customer => customer.Id == id);
+                return await this.mariaDbContext.Customers.AsNoTracking().FirstOrDefaultAsync(customer => customer.Id == id);
             }
             catch (Exception exception)
             {
@@ -63,7 +64,7 @@ namespace de.playground.aspnet.core.dataaccesses.mariadb
             try
             {
                 //return await this.mariaDbContext.Customers.AnyAsync(customer => customer.Id == id);
-                return 1 == await this.mariaDbContext.Customers.CountAsync(customer => customer.Id == id);
+                return 1 == await this.mariaDbContext.Customers.AsNoTracking().CountAsync(customer => customer.Id == id);
             }
             catch (Exception exception)
             {
