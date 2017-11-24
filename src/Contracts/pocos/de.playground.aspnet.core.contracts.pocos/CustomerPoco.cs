@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace de.playground.aspnet.core.contracts.pocos
 {
@@ -14,7 +13,7 @@ namespace de.playground.aspnet.core.contracts.pocos
         [StringLength(50)]
         public string Name { get; set; }
 
-        public IEnumerable<ProductPoco> Products { get; set; }
+        //public IEnumerable<ProductPoco> Products { get; set; }
 
         #endregion
     }

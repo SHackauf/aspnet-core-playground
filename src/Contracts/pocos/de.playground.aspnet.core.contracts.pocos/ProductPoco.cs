@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace de.playground.aspnet.core.contracts.pocos
 {
@@ -12,9 +11,6 @@ namespace de.playground.aspnet.core.contracts.pocos
 
         [Required]
         public int CustomerId { get; set; }
-
-        [ForeignKey("CustomerId")]
-        public CustomerPoco Customer { get; set; }
 
         [Required]
         [StringLength(50)]

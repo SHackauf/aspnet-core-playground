@@ -19,8 +19,8 @@ namespace de.playground.aspnet.core.dataaccesses.mariadb
         
             modelBuilder.Entity<ProductPoco>()
                 .ToTable("Products")
-                .HasOne(productPoco => productPoco.Customer)
-                .WithMany(customerPoco => customerPoco.Products)
+                .HasOne<CustomerPoco>()
+                .WithMany()
                 .HasForeignKey(productPoco => productPoco.CustomerId)
                 .HasConstraintName("FK_Customer_Product")
                 .OnDelete(DeleteBehavior.Cascade);
