@@ -16,6 +16,8 @@ using de.playground.aspnet.core.utils.swagger.ExtensionMethods;
 using de.playground.aspnet.core.servers.middlewares.ExtensionMethods;
 using de.playground.aspnet.core.contracts.dataaccesses;
 using de.playground.aspnet.core.dataaccesses.inmemory;
+using de.playground.aspnet.core.dataaccesses.mariadb.ExtensionMethods;
+using AutoMapper;
 
 namespace de.playground.aspnet.core.webapi
 {
@@ -52,6 +54,7 @@ namespace de.playground.aspnet.core.webapi
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddAutoMapper();
             services.AddApiVersioning();
             services.AddResponseCompression();
 
@@ -60,10 +63,11 @@ namespace de.playground.aspnet.core.webapi
                 () => this.ApiVersions.Select(versions => versions.SwaggerInfo), 
                 apiVersion => $"v{apiVersion.ToString()}");
 
-            services.AddTransient(typeof(ICustomerModule), typeof(CustomerModule));
-            services.AddTransient(typeof(IProductModule), typeof(ProductModule));
-            services.AddTransient(typeof(ICustomerDataAccess), typeof(CustomerInMemoryDataAccess));
-            services.AddTransient(typeof(IProductDataAccess), typeof(ProductInMemoryDataAccess));
+            services.ConfigureServicesModules(this.configuration);
+            services.ConfigureServicesMariaDbDataAccess(this.configuration);
+
+            // TODO: Per option setzen
+            //services.ConfigureServicesInMemoryDataAccess(this.Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
