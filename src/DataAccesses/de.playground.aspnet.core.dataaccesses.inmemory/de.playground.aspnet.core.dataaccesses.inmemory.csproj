@@ -2,24 +2,22 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
-    <RepositoryUrl>https://github.com/SHackauf/aspnet-core-playground</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/SHackauf/aspnet-core-playground</PackageProjectUrl>
     <Authors>Stefan Hackauf</Authors>
     <Company>Stefan Hackauf</Company>
     <Product>aspnet-core-playground</Product>
+    <PackageProjectUrl>https://github.com/SHackauf/aspnet-core-playground</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/SHackauf/aspnet-core-playground</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AutoMapper" Version="6.2.1" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Logging" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="2.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.0.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Contracts\dataaccesses\de.playground.aspnet.core.contracts.dataaccesses\de.playground.aspnet.core.contracts.dataaccesses.csproj" />
-    <ProjectReference Include="..\..\Contracts\modules\de.playground.aspnet.core.contracts.modules\de.playground.aspnet.core.contracts.modules.csproj" />
     <ProjectReference Include="..\..\Contracts\utils\de.playground.aspnet.core.contracts.utils.logger\de.playground.aspnet.core.contracts.utils.logger.csproj" />
-    <ProjectReference Include="..\..\Dtos\de.playground.aspnet.core.dtos\de.playground.aspnet.core.dtos.csproj" />
   </ItemGroup>
 
 </Project>

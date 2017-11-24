@@ -4,7 +4,11 @@ using System.IO.Compression;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using de.playground.aspnet.core.contracts.dataaccesses;
 using de.playground.aspnet.core.contracts.modules;
+using de.playground.aspnet.core.dataaccesses.inmemory;
+using de.playground.aspnet.core.dataaccesses.mariadb;
+using de.playground.aspnet.core.dataaccesses.mariadb.ExtensionMethods;
 using de.playground.aspnet.core.modules;
 using de.playground.aspnet.core.servers.middlewares.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
@@ -53,8 +57,11 @@ namespace de.playground.aspnet.core.mvc
                 options.Level = CompressionLevel.Fastest;
             });
 
-            services.AddTransient(typeof(ICustomerModule), typeof(CustomerModule));
-            services.AddTransient(typeof(IProductModule), typeof(ProductModule));
+            services.ConfigureServicesModules(this.Configuration);
+            services.ConfigureServicesMariaDbDataAccess(this.Configuration);
+
+            // TODO: Per option setzen
+            //services.ConfigureServicesInMemoryDataAccess(this.Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -4,10 +4,15 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 
+using AutoMapper;
+
+using de.playground.aspnet.core.contracts.dataaccesses;
 using de.playground.aspnet.core.contracts.dtos;
 using de.playground.aspnet.core.contracts.modules;
+using de.playground.aspnet.core.contracts.pocos;
 using de.playground.aspnet.core.contracts.utils.logger;
 using de.playground.aspnet.core.dtos;
+
 using Microsoft.Extensions.Logging;
 
 namespace de.playground.aspnet.core.modules
@@ -16,107 +21,114 @@ namespace de.playground.aspnet.core.modules
     {
         #region Private Fields
 
+        private readonly IProductDataAccess productDataAccess;
+
+        private readonly IMapper mapper;
         private readonly ILogger logger;
-
-        private static IList<IProductDto> storage = new List<IProductDto>
-            {
-                new ProductDto() { Id = 1, CustomerId = 1, Name = "Product1" },
-                new ProductDto() { Id = 2, CustomerId = 1, Name = "Product2" },
-                new ProductDto() { Id = 3, CustomerId = 1, Name = "Product3" },
-                new ProductDto() { Id = 4, CustomerId = 2, Name = "Product4" },
-                new ProductDto() { Id = 5, CustomerId = 2, Name = "Product5" },
-                new ProductDto() { Id = 6, CustomerId = 3, Name = "Product6" }
-            };
-
-        private static int nextFreeId = 7;
 
         #endregion
 
         #region Constructor
 
-        public ProductModule(ILogger<ProductModule> logger) => this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+        public ProductModule(ILogger<ProductModule> logger, IMapper mapper, IProductDataAccess productDataAccess)
+        {
+            this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            this.mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+            this.productDataAccess = productDataAccess ?? throw new ArgumentNullException(nameof(productDataAccess));
+        }
 
         #endregion
 
         #region Public Methods
 
-        public Task<IImmutableList<IProductDto>> GetProductsAsync(int customerId)
+        public async Task<IImmutableList<IProductDto>> GetProductsAsync(int customerId)
         {
-            var productDtos = storage.Where(product => product.CustomerId == customerId).ToImmutableList();
+            var productPocos = await this.productDataAccess.SelectProductsAsync(customerId);
+            var productDtos = this.mapper.Map<IEnumerable<ProductDto>>(productPocos);
             this.logger.LogDebug(LoggingEvents.GetItems, $"{nameof(this.GetProductsAsync)}: [count: {productDtos.Count()}]");
 
-            return Task.FromResult<IImmutableList<IProductDto>>(productDtos);
+            return productDtos.ToImmutableList<IProductDto>();
         }
 
-        public Task<IProductDto> GetProductAsync(int customerId, int id)
+        public async Task<IProductDto> GetProductAsync(int customerId, int id)
         {
-            var productDto = storage.FirstOrDefault(product => product.CustomerId == customerId && product.Id == id);
+            var productPoco = await this.productDataAccess.SelectProductAsync(customerId, id);
+            var productDto = this.mapper.Map<ProductDto>(productPoco);
             this.logger.LogDebug(LoggingEvents.GetItem, $"{nameof(this.GetProductAsync)}: [id: {id}][found: {productDto != null}]");
 
-            return Task.FromResult(productDto);
+            return productDto;
         }
 
-        public Task<bool> HasProductAsync(int customerId, int id)
+        public async Task<bool> HasProductAsync(int customerId, int id)
         {
-            var found = storage.Any(product => product.CustomerId == customerId && product.Id == id);
+            var found = await this.productDataAccess.ExistsProductAsync(customerId, id);
             this.logger.LogDebug(LoggingEvents.HasItem, $"{nameof(this.HasProductAsync)}: [id: {id}][found: {found}]");
 
-            return Task.FromResult(found);
+            return found;
         }
 
-        public Task<IProductDto> AddProductAsync(IProductDto product)
+        public async Task<IProductDto> AddProductAsync(IProductDto productDto)
         {
-            if (product == null)
+            if (productDto == null)
             {
-                new ArgumentNullException(nameof(product));
+                new ArgumentNullException(nameof(productDto));
             }
 
-            if (product.Id > 0)
+            if (productDto.Id > 0)
             {
-                new ArgumentException("Product has already an id.", nameof(product));
+                new ArgumentException("Product has already an id.", nameof(productDto));
             }
 
             //TODO: Prüfen ob customer vorhanden ist.
 
-            product.Id = nextFreeId++;
-            storage.Add(product);
-            this.logger.LogInformation(LoggingEvents.InsertItem, $"{nameof(this.AddProductAsync)}: successful [Id: {product.Id}]");
+            var productPoco = this.mapper.Map<ProductPoco>(productDto);
+            var savedProductPoco = await this.productDataAccess.InsertProductAsync(productPoco);
+            this.logger.LogInformation(LoggingEvents.InsertItem, $"{nameof(this.AddProductAsync)}: successful [Id: {savedProductPoco.Id}]");
 
-            return Task.FromResult(product);
+            var savedProductDto = this.mapper.Map<ProductDto>(savedProductPoco);
+            return savedProductDto;
         }
 
-        public Task<IProductDto> ModifyProductAsync(IProductDto product)
+        public async Task<IProductDto> ModifyProductAsync(IProductDto productDto)
         {
-            if (product == null)
-            {
-                throw new ArgumentNullException(nameof(product));
-            }
-
-            var productDto = storage.FirstOrDefault(internalProduct => internalProduct.Id == product.Id);
             if (productDto == null)
             {
-                return Task.FromResult<IProductDto>(null);
+                throw new ArgumentNullException(nameof(productDto));
             }
 
-            storage.Remove(productDto);
-            storage.Add(product);
-            this.logger.LogInformation(LoggingEvents.UpdateItem, $"{nameof(this.ModifyProductAsync)}: successful [Id: {product.Id}]");
+            var productPoco = this.mapper.Map<ProductPoco>(productDto);
+            if (!await this.productDataAccess.ExistsProductAsync(productPoco.CustomerId, productPoco.Id))
+            {
+                throw new ArgumentException("Product doesn't exist.", nameof(productDto));
+            }
 
-            return Task.FromResult(product);
+            var savedProductPoco = await this.productDataAccess.UpdateProductAsync(productPoco);
+            this.logger.LogInformation(LoggingEvents.UpdateItem, $"{nameof(this.ModifyProductAsync)}: successful [Id: {savedProductPoco.Id}]");
+
+            var savedProductDto = this.mapper.Map<ProductDto>(savedProductPoco);
+            return savedProductDto;
         }
 
-        public Task<bool> DeleteProductAsync(IProductDto product)
+        public async Task<bool> DeleteProductAsync(IProductDto productDto)
         {
-            var productDto = storage.FirstOrDefault(internalProduct => internalProduct.Id == product.Id);
             if (productDto == null)
             {
-                return Task.FromResult(false);
+                throw new ArgumentNullException(nameof(productDto));
             }
 
-            storage.Remove(productDto);
-            this.logger.LogInformation(LoggingEvents.DeleteItem, $"{nameof(this.DeleteProductAsync)}: successful [Id: {product.Id}]");
+            var productPoco = this.mapper.Map<ProductPoco>(productDto);
+            if (!await this.productDataAccess.ExistsProductAsync(productPoco.CustomerId, productPoco.Id))
+            {
+                return false;
+            }
 
-            return Task.FromResult(true);
+            var successful = await this.productDataAccess.RemoveProductAsync(productPoco.Id);
+            if (successful)
+            {
+                this.logger.LogInformation(LoggingEvents.DeleteItem, $"{nameof(this.DeleteProductAsync)}: successful [Id: {productPoco.Id}]");
+            }
+
+            return successful;
         }
 
         #endregion

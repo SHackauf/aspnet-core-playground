@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using de.playground.aspnet.core.contracts.dataaccesses;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NLog.Web;
 
@@ -20,7 +22,16 @@ namespace de.playground.aspnet.core.mvc
             try
             {
                 logger.Debug("init main");
-                BuildWebHost(args).Run();
+                var host = BuildWebHost(args);
+
+                using (var scope = host.Services.CreateScope())
+                {
+                    var services = scope.ServiceProvider;
+                    var dataAccessInitializes = services.GetServices<IDataAccessInitialize>();
+                    dataAccessInitializes.ToList().ForEach(dataAccessInitialize => dataAccessInitialize.Initialize());
+                }
+
+                host.Run();
             }
             catch (Exception exception)
             {
