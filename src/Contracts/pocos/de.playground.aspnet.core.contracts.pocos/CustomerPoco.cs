@@ -13,8 +13,6 @@ namespace de.playground.aspnet.core.contracts.pocos
         [StringLength(50)]
         public string Name { get; set; }
 
-        //public IEnumerable<ProductPoco> Products { get; set; }
-
         #endregion
     }
 }
