@@ -1,9 +1,11 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 using de.playground.aspnet.core.contracts.modules;
 using de.playground.aspnet.core.modules.XmlModels;
+
 using Microsoft.Extensions.Logging;
 
 namespace de.playground.aspnet.core.modules
@@ -27,18 +29,21 @@ namespace de.playground.aspnet.core.modules
 
         #region Public Methods
 
-        public bool Import(string xmlData)
+        public async Task<bool> ImportAsync(string xmlData)
         {
             if (xmlData == null)
             {
                 throw new ArgumentNullException(nameof(xmlData));
             }
 
-            if (this.TryDeserialize<XmlCustomer>(xmlData, out var xmlCustomer))
+            var xmlCustomer = await this.DeserializeAsync<XmlCustomer>(xmlData);
+            if (xmlCustomer != default(XmlCustomer))
             {
                 return true;
             }
-            else if (this.TryDeserialize<XmlCustomers>(xmlData, out var xmlCustomers))
+
+            var xmlCustomers = await this.DeserializeAsync<XmlCustomers>(xmlData);
+            if (xmlCustomers != default(XmlCustomers))
             {
                 return true;
             }
@@ -74,6 +79,25 @@ namespace de.playground.aspnet.core.modules
                     return false;
                 }
             }
+        }
+
+        private Task<T> DeserializeAsync<T>(string xmlData)
+        {
+            var taskCompletionSource = new TaskCompletionSource<T>();
+
+            Task.Run(() =>
+            {
+                if (this.TryDeserialize<T>(xmlData, out T result))
+                {
+                    taskCompletionSource.TrySetResult(result);
+                }
+                else
+                {
+                    taskCompletionSource.TrySetResult(default(T));
+                }
+            });
+
+            return taskCompletionSource.Task;
         }
 
         #endregion

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Threading.Tasks;
 
 namespace de.playground.aspnet.core.contracts.modules
 {
     public interface IXmlImportModule
     {
-        bool Import(string xmlFilePath);
+        Task<bool> ImportAsync(string xmlFilePath);
     }
 }

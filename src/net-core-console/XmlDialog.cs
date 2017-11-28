@@ -115,7 +115,7 @@ namespace de.playground.net.core.console
                     case "1":
 
                         var xmlData = await File.ReadAllTextAsync(path);
-                        var successful = this.xmlImportModule.Import(xmlData);
+                        var successful = await this.xmlImportModule.ImportAsync(xmlData);
 
                         Console.WriteLine(successful ? "Import successful" : "Import failed");
                         Console.WriteLine("====================================");
