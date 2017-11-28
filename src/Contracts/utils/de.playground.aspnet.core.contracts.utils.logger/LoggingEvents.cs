@@ -9,6 +9,7 @@
         public const int InsertItem = 1004;
         public const int UpdateItem = 1005;
         public const int DeleteItem = 1006;
+        public const int ImportItem = 1007;
 
         public const int Show = 2000;
         public const int ShowItems = 2001;

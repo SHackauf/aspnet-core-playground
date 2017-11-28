@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+
 using de.playground.aspnet.core.contracts.utils.logger;
+
 using Microsoft.Extensions.Logging;
 
 namespace de.playground.net.core.console
@@ -11,14 +13,16 @@ namespace de.playground.net.core.console
 
         private readonly ILogger logger;
         private readonly CustomerDialog customerDialog;
+        private readonly XmlDialog xmlDialog;
 
         #endregion
 
         #region Constructor
 
-        public MainDialog(CustomerDialog customerDialog, ILogger<MainDialog> logger)
+        public MainDialog(CustomerDialog customerDialog, XmlDialog xmlDialog, ILogger<MainDialog> logger)
         {
             this.customerDialog = customerDialog ?? throw new ArgumentNullException(nameof(customerDialog));
+            this.xmlDialog = xmlDialog ?? throw new ArgumentNullException(nameof(xmlDialog));
             this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
@@ -39,6 +43,7 @@ namespace de.playground.net.core.console
                 Console.WriteLine("");
                 Console.WriteLine("====================================");
                 Console.WriteLine("   1:        show customers");
+                Console.WriteLine("   9:        XML import");
                 Console.WriteLine("   <return>: end program");
                 Console.WriteLine("====================================");
 
@@ -49,6 +54,10 @@ namespace de.playground.net.core.console
                 {
                     case "1":
                         await this.customerDialog.ShowAsync();
+                        break;
+
+                    case "9":
+                        await this.xmlDialog.ShowAsync();
                         break;
 
                     case "":

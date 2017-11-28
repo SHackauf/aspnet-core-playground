@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Customer Name="Example 2 - Customer 1">
+  <Products>
+    <Product Name="Example 2 - Produt 1">
+    </Product>
+  </Products>
+</Customer>
