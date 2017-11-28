@@ -2,7 +2,8 @@
 
 namespace de.playground.aspnet.core.modules.XmlModels
 {
-    public class Customer
+    [XmlRoot(ElementName = "Customer")]
+    public class XmlCustomer
     {
         [XmlAttribute(AttributeName = "Name")]
         public string Name { get; set; }

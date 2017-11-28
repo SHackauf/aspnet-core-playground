@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Runtime.Serialization;
-using System.Xml;
 using System.Xml.Serialization;
 
 using de.playground.aspnet.core.contracts.modules;
@@ -37,18 +34,43 @@ namespace de.playground.aspnet.core.modules
                 throw new ArgumentNullException(nameof(xmlData));
             }
 
+            if (this.TryDeserialize<XmlCustomer>(xmlData, out var xmlCustomer))
+            {
+                return true;
+            }
+            else if (this.TryDeserialize<XmlCustomers>(xmlData, out var xmlCustomers))
+            {
+                return true;
+            }
+
+            this.logger.LogError("Can not read XML-Data.");
+            return false;
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private bool TryDeserialize<T>(string xmlData, out T result)
+        {
+            if (xmlData == null)
+            {
+                throw new ArgumentNullException(nameof(xmlData));
+            }
+
             using (var stringReader = new StringReader(xmlData))
             {
                 try
                 {
-                    var xmlSerializer = new XmlSerializer(typeof(Customer));
-                    var customer = xmlSerializer.Deserialize(stringReader) as Customer;
+                    var xmlSerializer = new XmlSerializer(typeof(T));
+                    result = (T) xmlSerializer.Deserialize(stringReader);
 
                     return true;
                 }
                 catch (Exception exception)
                 {
-                    this.logger.LogError(exception, "Can not read XML-Data.");
+                    this.logger.LogDebug(exception, "Can not read XML-Data.");
+                    result =  default(T);
                     return false;
                 }
             }
