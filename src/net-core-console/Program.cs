@@ -80,6 +80,7 @@ namespace de.playground.net.core.console
 
             serviceCollection.AddTransient<MainDialog>();
             serviceCollection.AddTransient<CustomerDialog>();
+            serviceCollection.AddTransient<XmlDialog>();
         }
 
         private void ConfigureServiceProvider(IServiceProvider serviceProvider)
