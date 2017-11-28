@@ -47,7 +47,7 @@ namespace de.playground.net.core.console
                 }
 
                 Console.WriteLine("====================================");
-                Console.WriteLine("   <number> import file");
+                Console.WriteLine("   <number> show file");
                 Console.WriteLine("   <return> go back");
                 Console.WriteLine("====================================");
 
@@ -58,13 +58,54 @@ namespace de.playground.net.core.console
                 {
                     case string inputAsString when int.TryParse(input, out var inputAsNumber) && inputAsNumber < files.Count():
 
-                        Console.WriteLine($"Import file: {files[inputAsNumber]}");
-                        Console.ReadLine();
+                        this.ShowFile(files[inputAsNumber]);
                         break;
 
                     case "":
                         return;
                 }
+            }
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        private void ShowFile(string path)
+        {
+            Console.Clear();
+            Console.WriteLine("====================================");
+            Console.WriteLine("   net-core-console");
+            Console.WriteLine("====================================");
+
+            if (!File.Exists(path))
+            {
+                Console.WriteLine("File doesn't exists.");
+            }
+            else
+            {
+                using (StreamReader streamReader = new StreamReader(new FileStream(path, FileMode.Open)))
+                {
+                    string fileLine = streamReader.ReadLine();
+                    while (fileLine != null)
+                    {
+                        Console.WriteLine(fileLine);
+                        fileLine = streamReader.ReadLine();
+                    }
+                }
+            }
+
+            Console.WriteLine("====================================");
+            Console.WriteLine("   <return> go back");
+            Console.WriteLine("====================================");
+
+            var input = Console.ReadLine();
+            this.logger.LogDebug(LoggingEvents.Input, $"{nameof(this.ShowFile)}: [input: {input}]");
+
+            switch (input)
+            {
+                case "":
+                    return;
             }
         }
 
