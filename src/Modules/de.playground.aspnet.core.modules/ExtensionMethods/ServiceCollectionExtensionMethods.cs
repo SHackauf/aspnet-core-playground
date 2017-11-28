@@ -13,6 +13,7 @@ namespace de.playground.aspnet.core.dataaccesses.mariadb.ExtensionMethods
         {
             services.AddTransient(typeof(ICustomerModule), typeof(CustomerModule));
             services.AddTransient(typeof(IProductModule), typeof(ProductModule));
+            services.AddTransient<IXmlImportModule, XmlImportModule>();
         }
     }
 }

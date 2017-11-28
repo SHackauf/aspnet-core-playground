@@ -47,6 +47,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="Examples\Example004.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Examples\Example001.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

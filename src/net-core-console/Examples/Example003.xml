@@ -1,20 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<customers>
-  <customer name="Example 3 - Customer 1">
-    <products>
-      <product name="Example 3 - Produt 1"></product>
-      <product name="Example 3 - Produt 2"></product>
-      <product name="Example 3 - Produt 3"></product>
-    </products>
-  </customer>
-  <customer name="Example 3 - Customer 2">
-    <products>
-      <product name="Example 3 - Produt 4"></product>
-      <product name="Example 3 - Produt 5"></product>
-    </products>
-  </customer>
-  <customer name="Example 3 - Customer 3">
-    <products>
-    </products>
-  </customer>
-</customers>
+<Customer Name="Example 2 - Customer 1">
+  <Products>
+    <Product Name="Example 2 - Produt 1">
+    </Product>
+  </Products>
+</Customer>

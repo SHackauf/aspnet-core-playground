@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Customers>
+  <Customer Name="Example 3 - Customer 1">
+    <Products>
+      <product Name="Example 3 - Produt 1"></product>
+      <product Name="Example 3 - Produt 2"></product>
+      <product Name="Example 3 - Produt 3"></product>
+    </Products>
+  </Customer>
+  <Customer Name="Example 3 - Customer 2">
+    <Products>
+      <product Name="Example 3 - Produt 4"></product>
+      <product Name="Example 3 - Produt 5"></product>
+    </Products>
+  </Customer>
+  <Customer Name="Example 3 - Customer 3">
+    <Products>
+    </Products>
+  </Customer>
+</Customers>
