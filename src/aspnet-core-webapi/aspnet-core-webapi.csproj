@@ -22,12 +22,12 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="3.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.3" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="2.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.0.0" />
-    <PackageReference Include="NLog" Version="4.5.0-beta08" />
-    <PackageReference Include="NLog.Web.AspNetCore" Version="4.5.0-beta04" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="1.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="2.0.1" />
+    <PackageReference Include="NLog" Version="4.5.2" />
+    <PackageReference Include="NLog.Web.AspNetCore" Version="4.5.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,6 +35,8 @@
     <ProjectReference Include="..\Contracts\modules\de.playground.aspnet.core.contracts.modules\de.playground.aspnet.core.contracts.modules.csproj" />
     <ProjectReference Include="..\DataAccesses\de.playground.aspnet.core.dataaccesses.inmemory\de.playground.aspnet.core.dataaccesses.inmemory.csproj" />
     <ProjectReference Include="..\DataAccesses\de.playground.aspnet.core.dataaccesses.mariadb\de.playground.aspnet.core.dataaccesses.mariadb.csproj" />
+    <ProjectReference Include="..\de.playground.aspnet.core.contracts.paging\de.playground.aspnet.core.contracts.paging.csproj" />
+    <ProjectReference Include="..\Extensions\de.playgound.aspnet.core.webapi.extensions\de.playground.aspnet.core.webapi.extensions.csproj" />
     <ProjectReference Include="..\Modules\de.playground.aspnet.core.modules\de.playground.aspnet.core.modules.csproj" />
     <ProjectReference Include="..\Servers\de.playground.aspnet.core.servers.middlewares\de.playground.aspnet.core.servers.middlewares.csproj" />
     <ProjectReference Include="..\Utils\de.playground.aspnet.core.utils.swagger\de.playground.aspnet.core.utils.swagger.csproj" />

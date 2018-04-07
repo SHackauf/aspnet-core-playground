@@ -32,11 +32,19 @@ namespace de.playground.aspnet.core.dataaccesses.inmemory
 
         #region Constructor
 
-        public CustomerInMemoryDataAccess(ILogger<CustomerInMemoryDataAccess> logger) => this.logger = logger ?? throw new ArgumentNullException(nameof(logger)); 
+        public CustomerInMemoryDataAccess(ILogger<CustomerInMemoryDataAccess> logger) => this.logger = logger ?? throw new ArgumentNullException(nameof(logger));
 
         #endregion
 
         #region Public Methods
+
+        public Task<int> CountCustomersAsync()
+        {
+            var count = storage.Count();
+            this.logger.LogDebug(LoggingEvents.CountIems, $"{nameof(this.CountCustomersAsync)}: [count: {count}]");
+
+            return Task.FromResult(count);
+        }
 
         public Task<IEnumerable<CustomerPoco>> SelectCustomersAsync()
         {
@@ -46,9 +54,25 @@ namespace de.playground.aspnet.core.dataaccesses.inmemory
             return Task.FromResult<IEnumerable<CustomerPoco>>(customerPocos);
         }
 
+        public Task<IEnumerable<CustomerPoco>> SelectCustomersAsync(int offset, int limit)
+        {
+            var customerPocos = storage.OrderBy(customer => customer.Id).Skip(offset).Take(limit).ToArray();
+            this.logger.LogDebug(LoggingEvents.GetItems, $"{nameof(this.SelectCustomersAsync)}: [count: {customerPocos.Count()}]");
+
+            return Task.FromResult<IEnumerable<CustomerPoco>>(customerPocos);
+        }
+
         public Task<IEnumerable<CustomerPoco>> SelectCustomersAsync(Expression<Func<CustomerPoco, bool>> whereExpression)
         {
             var customerPocos = storage.Where(whereExpression.Compile()).ToArray();
+            this.logger.LogDebug(LoggingEvents.GetItems, $"{nameof(this.SelectCustomersAsync)}: [count: {customerPocos.Count()}]");
+
+            return Task.FromResult<IEnumerable<CustomerPoco>>(customerPocos);
+        }
+
+        public Task<IEnumerable<CustomerPoco>> SelectCustomersAsync(Expression<Func<CustomerPoco, bool>> whereExpression, int offset, int limit)
+        {
+            var customerPocos = storage.Where(whereExpression.Compile()).OrderBy(customer => customer.Id).Skip(offset).Take(limit).ToArray();
             this.logger.LogDebug(LoggingEvents.GetItems, $"{nameof(this.SelectCustomersAsync)}: [count: {customerPocos.Count()}]");
 
             return Task.FromResult<IEnumerable<CustomerPoco>>(customerPocos);

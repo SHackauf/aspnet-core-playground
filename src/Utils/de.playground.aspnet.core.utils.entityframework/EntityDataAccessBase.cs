@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using de.playground.aspnet.core.contracts.pocos;
 using de.playground.aspnet.core.contracts.utils.logger;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -42,6 +43,32 @@ namespace de.playground.aspnet.core.utils.entityframework
 
         #region Protected Methods
 
+        protected async Task<int> CountPocosAsync()
+        {
+            try
+            {
+                return await this.GetDbSet(this.dbContext).AsNoTracking().CountAsync();
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError(exception, "Can't count pocos.");
+                throw exception;
+            }
+        }
+
+        protected async Task<int> CountPocosAsync(Expression<Func<TPoco, bool>> whereExpression)
+        {
+            try
+            {
+                return await this.GetDbSet(this.dbContext).AsNoTracking().CountAsync(whereExpression);
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError(exception, "Can't count pocos with where.");
+                throw exception;
+            }
+        }
+
         protected async Task<IEnumerable<TPoco>> SelectPocosAsync()
         {
             try
@@ -55,11 +82,37 @@ namespace de.playground.aspnet.core.utils.entityframework
             }
         }
 
+        protected async Task<IEnumerable<TPoco>> SelectPocosAsync<TOrderKey>(int offset, int limit, Expression<Func<TPoco, TOrderKey>> orderExpression)
+        {
+            try
+            {
+                return await this.GetDbSet(this.dbContext).AsNoTracking().OrderBy(orderExpression).Skip(offset).Take(limit).ToArrayAsync();
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError(exception, "Can't select pocos with paging.");
+                throw exception;
+            }
+        }
+
         public async Task<IEnumerable<TPoco>> SelectPocosAsync(Expression<Func<TPoco, bool>> whereExpression)
         {
             try
             {
                 return await this.GetDbSet(this.dbContext).AsNoTracking().Where(whereExpression).ToArrayAsync();
+            }
+            catch (Exception exception)
+            {
+                this.logger.LogError(exception, "Can't select pocos with where.");
+                throw exception;
+            }
+        }
+
+        public async Task<IEnumerable<TPoco>> SelectPocosAsync<TOrderKey>(Expression<Func<TPoco, bool>> whereExpression, int offset, int limit, Expression<Func<TPoco, TOrderKey>> orderExpression)
+        {
+            try
+            {
+                return await this.GetDbSet(this.dbContext).AsNoTracking().Where(whereExpression).OrderBy(orderExpression).Skip(offset).Take(limit).ToArrayAsync();
             }
             catch (Exception exception)
             {

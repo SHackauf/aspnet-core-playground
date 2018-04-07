@@ -42,3 +42,8 @@
 /src/Utils/de.playground.aspnet.core.utils.entityframework/obj/
 /src/Utils/de.playground.aspnet.core.utils.swagger/bin/
 /src/Utils/de.playground.aspnet.core.utils.swagger/obj/
+/src/Extensions/de.playgound.aspnet.core.webapi.extensions/bin/Debug/netstandard2.0
+/src/Extensions/de.playgound.aspnet.core.webapi.extensions/obj/Debug/netstandard2.0
+/src/Extensions/de.playgound.aspnet.core.webapi.extensions/obj
+/src/de.playground.aspnet.core.contracts.paging/obj
+/src/de.playground.aspnet.core.contracts.paging/bin/Debug/netstandard2.0

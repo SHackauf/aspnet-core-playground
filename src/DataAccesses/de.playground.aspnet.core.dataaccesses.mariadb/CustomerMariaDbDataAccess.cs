@@ -25,11 +25,20 @@ namespace de.playground.aspnet.core.dataaccesses.mariadb
 
         #region Public Methods
 
+        public async Task<int> CountCustomersAsync()
+            => await this.CountPocosAsync();
+
         public async Task<IEnumerable<CustomerPoco>> SelectCustomersAsync()
             => await this.SelectPocosAsync();
 
+        public async Task<IEnumerable<CustomerPoco>> SelectCustomersAsync(int offset, int limit)
+            => await this.SelectPocosAsync(offset, limit, poco => poco.Id);
+
         public async Task<IEnumerable<CustomerPoco>> SelectCustomersAsync(Expression<Func<CustomerPoco, bool>> whereExpression)
             => await this.SelectPocosAsync(whereExpression);
+
+        public async Task<IEnumerable<CustomerPoco>> SelectCustomersAsync(Expression<Func<CustomerPoco, bool>> whereExpression, int offset, int limit)
+            => await this.SelectPocosAsync(whereExpression, offset, limit, poco => poco.Id);
 
         public async Task<CustomerPoco> SelectCustomerAsync(int id)
             => await this.SelectPocoAsync(customer => customer.Id == id);

@@ -3,9 +3,12 @@ using System.Net;
 using System.Threading.Tasks;
 using de.playground.aspnet.core.contracts.dtos;
 using de.playground.aspnet.core.contracts.modules;
+using de.playground.aspnet.core.contracts.paging;
 using de.playground.aspnet.core.dtos;
+using de.playground.aspnet.core.webapi.extensions.ExtensionMethods;
 
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -40,6 +43,47 @@ namespace de.playground.aspnet.core.webapi.Controllers
         [HttpGet]
         [ProducesResponseType(typeof(IImmutableList<ICustomerDto>), (int)HttpStatusCode.OK)]
         public async Task<IActionResult> GetAsync() => this.Ok(await this.customerModule.GetCustomersAsync());
+
+        /// <summary>
+        /// Gets all customers.
+        /// </summary>
+        /// <remarks>Use paging.</remarks>
+        /// <param name="offset">The offset (first item). Starts with 0.</param>
+        /// <param name="limit">The item limits per call.</param>
+        /// <param name="envelope">
+        ///     True means the paging information wil be part of the response body and header.
+        ///     False means the paging information willbe only part of the response header.
+        /// </param>
+        /// <returns>Returns all customers.
+        ///     envelope is true: as <see cref="PagingDto{ICustomerDto}"/>
+        ///     envelope is false: as <see cref="IImmutableList{ICustomerDto}"/>
+        /// </returns>
+        /// <response code="200">Returns all customers.
+        ///     envelope is true: as <see cref="PagingDto{ICustomerDto}"/>
+        ///     envelope is false: as <see cref="IImmutableList{ICustomerDto}"/>
+        /// </response>
+        [HttpGet("paging", Name = nameof(CustomersControllerV1) + "_" + nameof(GetCustomersAsync))]
+        [ProducesResponseType(typeof(PagingDto<ICustomerDto>), (int)HttpStatusCode.OK)]
+        public async Task<IActionResult> GetCustomersAsync([FromQuery]int offset, [FromQuery]int limit, [FromQuery]bool envelope)
+        {
+            var customerDtosTask = this.customerModule.GetCustomersAsync();
+            var count = await this.customerModule.CountCustomersAsync();
+            var customerDtos = await customerDtosTask;
+
+            return this.OkPaging<ICustomerDto>(
+                nameof(CustomersControllerV1) + "_" + nameof(GetCustomersAsync),
+                customerDtos,
+                offset,
+                limit,
+                count,
+                envelope,
+                (internalOffset, internalLimit, internalEnvelope) => new RouteValueDictionary
+                {
+                    { nameof(offset), internalOffset },
+                    { nameof(limit), internalLimit },
+                    { nameof(envelope), internalEnvelope }
+                });
+        }
 
         /// <summary>
         /// Gets customer from id.
