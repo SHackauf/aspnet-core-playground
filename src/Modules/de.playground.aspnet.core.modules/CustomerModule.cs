@@ -41,7 +41,24 @@ namespace de.playground.aspnet.core.modules
 
         #region Public Methods
 
+        public async Task<int> CountCustomersAsync()
+        {
+            var count = await this.customerDataAccess.CountCustomersAsync();
+            this.logger.LogDebug(LoggingEvents.CountIems, $"{nameof(this.CountCustomersAsync)}: [count: {count}]");
+
+            return count;
+        }
+
         public async Task<IImmutableList<ICustomerDto>> GetCustomersAsync()
+        {
+            var customerPocos = await this.customerDataAccess.SelectCustomersAsync();
+            var customerDtos = this.mapper.Map<IEnumerable<CustomerDto>>(customerPocos);
+            this.logger.LogDebug(LoggingEvents.GetItems, $"{nameof(this.GetCustomersAsync)}: [count: {customerDtos.Count()}]");
+
+            return customerDtos.ToImmutableList<ICustomerDto>();
+        }
+
+        public async Task<IImmutableList<ICustomerDto>> GetCustomersAsync(int offset, int limit)
         {
             var customerPocos = await this.customerDataAccess.SelectCustomersAsync();
             var customerDtos = this.mapper.Map<IEnumerable<CustomerDto>>(customerPocos);
