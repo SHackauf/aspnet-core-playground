@@ -18,6 +18,7 @@
     </Content>
     <Content Include="appsettings.json">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="nlog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -43,6 +44,7 @@
     <ProjectReference Include="..\Contracts\dataaccesses\de.playground.aspnet.core.contracts.dataaccesses\de.playground.aspnet.core.contracts.dataaccesses.csproj" />
     <ProjectReference Include="..\DataAccesses\de.playground.aspnet.core.dataaccesses.inmemory\de.playground.aspnet.core.dataaccesses.inmemory.csproj" />
     <ProjectReference Include="..\DataAccesses\de.playground.aspnet.core.dataaccesses.mariadb\de.playground.aspnet.core.dataaccesses.mariadb.csproj" />
+    <ProjectReference Include="..\de.playground.aspnet.core.dataaccesses.sqlite\de.playground.aspnet.core.dataaccesses.sqlite.csproj" />
     <ProjectReference Include="..\Modules\de.playground.aspnet.core.modules\de.playground.aspnet.core.modules.csproj" />
   </ItemGroup>
 

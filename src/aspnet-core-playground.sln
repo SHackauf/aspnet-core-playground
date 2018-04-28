@@ -51,6 +51,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "de.playground.aspnet.core.w
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "de.playground.aspnet.core.contracts.paging", "de.playground.aspnet.core.contracts.paging\de.playground.aspnet.core.contracts.paging.csproj", "{9F99F901-1623-4C5F-B11E-FED91C3BA342}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "de.playground.aspnet.core.dataaccesses.sqlite", "de.playground.aspnet.core.dataaccesses.sqlite\de.playground.aspnet.core.dataaccesses.sqlite.csproj", "{664090EB-E508-45C4-B48E-8BA4ADC3B2FF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -125,6 +127,10 @@ Global
 		{9F99F901-1623-4C5F-B11E-FED91C3BA342}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9F99F901-1623-4C5F-B11E-FED91C3BA342}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9F99F901-1623-4C5F-B11E-FED91C3BA342}.Release|Any CPU.Build.0 = Release|Any CPU
+		{664090EB-E508-45C4-B48E-8BA4ADC3B2FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{664090EB-E508-45C4-B48E-8BA4ADC3B2FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{664090EB-E508-45C4-B48E-8BA4ADC3B2FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{664090EB-E508-45C4-B48E-8BA4ADC3B2FF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -144,6 +150,7 @@ Global
 		{952C4B24-3306-451D-A07B-956E5FE4D7FF} = {14CF8397-805C-4A5E-8C41-6B5B015B7ACB}
 		{985CDD35-6175-4ACC-96D6-69AF85B83339} = {760A5626-AEC2-4C0C-9356-B64FC549A691}
 		{9F99F901-1623-4C5F-B11E-FED91C3BA342} = {510548C6-6568-4196-BAFF-D6EFF746C94B}
+		{664090EB-E508-45C4-B48E-8BA4ADC3B2FF} = {D8F004C9-1291-4468-B157-22A2F22EBC97}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C1A3876-5607-4D58-AFF9-F8C82BAFE93B}

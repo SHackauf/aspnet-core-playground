@@ -5,6 +5,7 @@ using de.playground.aspnet.core.contracts.dataaccesses;
 using de.playground.aspnet.core.contracts.modules;
 using de.playground.aspnet.core.dataaccesses.inmemory;
 using de.playground.aspnet.core.dataaccesses.mariadb.ExtensionMethods;
+using de.playground.aspnet.core.dataaccesses.sqlite.ExtensionMethods;
 using de.playground.aspnet.core.modules;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -73,10 +74,11 @@ namespace de.playground.net.core.console
             serviceCollection.AddLogging((builder) => builder.SetMinimumLevel(LogLevel.Trace));
 
             serviceCollection.ConfigureServicesModules(this.configuration);
-            serviceCollection.ConfigureServicesMariaDbDataAccess(this.configuration);
+            serviceCollection.ConfigureServicesSqLiteDbDataAccess(this.configuration);
+            //serviceCollection.ConfigureServicesMariaDbDataAccess(this.configuration);
 
             // TODO: Per option setzen
-            //services.ConfigureServicesInMemoryDataAccess(this.Configuration);
+            //serviceCollection.ConfigureServicesInMemoryDataAccess(this.configuration);
 
             serviceCollection.AddTransient<MainDialog>();
             serviceCollection.AddTransient<CustomerDialog>();
