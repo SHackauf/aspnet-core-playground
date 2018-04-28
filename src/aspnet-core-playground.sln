@@ -53,6 +53,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "de.playground.aspnet.core.c
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "de.playground.aspnet.core.dataaccesses.sqlite", "DataAccesses\de.playground.aspnet.core.dataaccesses.sqlite\de.playground.aspnet.core.dataaccesses.sqlite.csproj", "{6BC58671-7BB0-46DC-95C5-F1022809F376}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "de.playground.aspnet.core.dataaccesses.sqlite.migration", "DataAccesses\de.playground.aspnet.core.dataaccesses.sqlite.migration\de.playground.aspnet.core.dataaccesses.sqlite.migration.csproj", "{1B6034FC-A5B5-48D8-8D28-825B5C305207}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -131,6 +133,10 @@ Global
 		{6BC58671-7BB0-46DC-95C5-F1022809F376}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6BC58671-7BB0-46DC-95C5-F1022809F376}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6BC58671-7BB0-46DC-95C5-F1022809F376}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1B6034FC-A5B5-48D8-8D28-825B5C305207}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1B6034FC-A5B5-48D8-8D28-825B5C305207}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1B6034FC-A5B5-48D8-8D28-825B5C305207}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1B6034FC-A5B5-48D8-8D28-825B5C305207}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -151,6 +157,7 @@ Global
 		{985CDD35-6175-4ACC-96D6-69AF85B83339} = {760A5626-AEC2-4C0C-9356-B64FC549A691}
 		{6F2959F4-FE13-4D44-A1C2-33425B3B2401} = {510548C6-6568-4196-BAFF-D6EFF746C94B}
 		{6BC58671-7BB0-46DC-95C5-F1022809F376} = {D8F004C9-1291-4468-B157-22A2F22EBC97}
+		{1B6034FC-A5B5-48D8-8D28-825B5C305207} = {D8F004C9-1291-4468-B157-22A2F22EBC97}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C1A3876-5607-4D58-AFF9-F8C82BAFE93B}

@@ -20,4 +20,9 @@
     <ProjectReference Include="..\..\Utils\de.playground.aspnet.core.utils.entityframework\de.playground.aspnet.core.utils.entityframework.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.0" />
+    <DotNetCliToolReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.0" />
+  </ItemGroup>
+
 </Project>
