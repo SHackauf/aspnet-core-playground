@@ -11,8 +11,4 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Cors" Version="2.0.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\de.playground.aspnet.core.contracts.paging\de.playground.aspnet.core.contracts.paging.csproj" />
-  </ItemGroup>
-
 </Project>
