@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\de.playground.aspnet.core.contracts.paging\de.playground.aspnet.core.contracts.paging.csproj" />
+    <ProjectReference Include="..\..\Contracts\dtos\de.playground.aspnet.core.contracts.paging\de.playground.aspnet.core.contracts.paging.csproj" />
   </ItemGroup>
 
 </Project>

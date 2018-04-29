@@ -1,12 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>Stefan Hackauf</Authors>
     <Company>Stefan Hackauf</Company>
     <Product>aspnet-core-playground</Product>
     <PackageProjectUrl>https://github.com/SHackauf/aspnet-core-playground</PackageProjectUrl>
     <RepositoryUrl>https://github.com/SHackauf/aspnet-core-playground</RepositoryUrl>
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.ComponentModel.Annotations" Version="4.4.1" />
+  </ItemGroup>
 
 </Project>

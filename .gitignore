@@ -47,3 +47,11 @@
 /src/Extensions/de.playgound.aspnet.core.webapi.extensions/obj
 /src/de.playground.aspnet.core.contracts.paging/obj
 /src/de.playground.aspnet.core.contracts.paging/bin/Debug/netstandard2.0
+/src/de.playground.aspnet.core.dataaccesses.sqlite/bin/Debug/netstandard2.0
+/src/de.playground.aspnet.core.dataaccesses.sqlite/obj/Debug/netstandard2.0
+/src/de.playground.aspnet.core.dataaccesses.sqlite/obj
+/src/Contracts/dtos/de.playground.aspnet.core.contracts.paging/bin/Debug/netstandard2.0
+/src/Contracts/dtos/de.playground.aspnet.core.contracts.paging/obj
+/src/DataAccesses/de.playground.aspnet.core.dataaccesses.sqlite/bin/Debug/netstandard2.0
+/src/DataAccesses/de.playground.aspnet.core.dataaccesses.sqlite/obj/Debug/netstandard2.0
+/src/DataAccesses/de.playground.aspnet.core.dataaccesses.sqlite/obj
