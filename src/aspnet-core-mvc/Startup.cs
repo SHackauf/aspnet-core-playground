@@ -9,6 +9,7 @@ using de.playground.aspnet.core.contracts.modules;
 using de.playground.aspnet.core.dataaccesses.inmemory;
 using de.playground.aspnet.core.dataaccesses.mariadb;
 using de.playground.aspnet.core.dataaccesses.mariadb.ExtensionMethods;
+using de.playground.aspnet.core.dataaccesses.sqlite.ExtensionMethods;
 using de.playground.aspnet.core.modules;
 using de.playground.aspnet.core.servers.middlewares.ExtensionMethods;
 using Microsoft.AspNetCore.Builder;
@@ -58,10 +59,11 @@ namespace de.playground.aspnet.core.mvc
             });
 
             services.ConfigureServicesModules(this.Configuration);
-            services.ConfigureServicesMariaDbDataAccess(this.Configuration);
+            //services.ConfigureServicesMariaDbDataAccess(this.Configuration, true);
+            services.ConfigureServicesSqLiteDbDataAccess(this.Configuration, true);
 
             // TODO: Per option setzen
-            //services.ConfigureServicesInMemoryDataAccess(this.Configuration);
+            //services.ConfigureServicesInMemoryDataAccess(this.Configuration, true);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -90,6 +92,8 @@ namespace de.playground.aspnet.core.mvc
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            app.ApplicationServices.GetService<IDataAccessInitialize>().Initialize();
         }
 
         #endregion

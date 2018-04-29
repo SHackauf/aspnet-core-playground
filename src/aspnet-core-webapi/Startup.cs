@@ -18,6 +18,7 @@ using de.playground.aspnet.core.contracts.dataaccesses;
 using de.playground.aspnet.core.dataaccesses.inmemory;
 using de.playground.aspnet.core.dataaccesses.mariadb.ExtensionMethods;
 using AutoMapper;
+using de.playground.aspnet.core.dataaccesses.sqlite.ExtensionMethods;
 
 namespace de.playground.aspnet.core.webapi
 {
@@ -64,7 +65,8 @@ namespace de.playground.aspnet.core.webapi
                 apiVersion => $"v{apiVersion.ToString()}");
 
             services.ConfigureServicesModules(this.configuration);
-            services.ConfigureServicesMariaDbDataAccess(this.configuration);
+            // services.ConfigureServicesMariaDbDataAccess(this.configuration, true);
+            services.ConfigureServicesSqLiteDbDataAccess(this.configuration, true);
 
             // TODO: Per option setzen
             //services.ConfigureServicesInMemoryDataAccess(this.Configuration);
@@ -92,6 +94,8 @@ namespace de.playground.aspnet.core.webapi
             {
                 this.ApiVersions.ToList().ForEach(version => setupAction.SwaggerEndpoint(version.SwaggerEndpointUrl, version.SwaggerEndpointDescription));
             });
+
+            app.ApplicationServices.GetService<IDataAccessInitialize>().Initialize();
         }
 
         #endregion

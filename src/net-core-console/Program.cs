@@ -74,7 +74,7 @@ namespace de.playground.net.core.console
             serviceCollection.AddLogging((builder) => builder.SetMinimumLevel(LogLevel.Trace));
 
             serviceCollection.ConfigureServicesModules(this.configuration);
-            serviceCollection.ConfigureServicesSqLiteDbDataAccess(this.configuration);
+            serviceCollection.ConfigureServicesSqLiteDbDataAccess(this.configuration, false);
             //serviceCollection.ConfigureServicesMariaDbDataAccess(this.configuration);
 
             // TODO: Per option setzen

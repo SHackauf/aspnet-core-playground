@@ -8,14 +8,21 @@ namespace de.playground.aspnet.core.dataaccesses.sqlite.ExtensionMethods
 {
     public static class ServiceCollectionExtensionMethods
     {
-        public static void ConfigureServicesSqLiteDbDataAccess(this IServiceCollection services, IConfiguration Configuration)
+        public static void ConfigureServicesSqLiteDbDataAccess(this IServiceCollection services, IConfiguration Configuration, bool initializeWithServiceScope)
         {
             services.AddDbContext<SqLiteDbContext>(options => options.UseSqlite(Configuration.GetConnectionString("SqLiteDbConnection")));
 
             services.AddTransient(typeof(ICustomerDataAccess), typeof(CustomerSqLiteDbDataAccess));
             services.AddTransient(typeof(IProductDataAccess), typeof(ProductSqLiteDbDataAccess));
 
-            services.AddTransient<IDataAccessInitialize, SqLiteDbInitialize>();
+            if (initializeWithServiceScope)
+            {
+                services.AddTransient<IDataAccessInitialize, SqLiteDbServiceScopeInitialize>();
+            }
+            else
+            {
+                services.AddTransient<IDataAccessInitialize, SqLiteDbInitialize>();
+            }
         }
     }
 }
